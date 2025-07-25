@@ -1,0 +1,41 @@
+# version: "3.7"
+services:
+  backend2:
+    container_name: ecomerce_backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9009:80"
+    environment:
+      - DB_HOST=postgres_db
+      - DB_PORT=5432
+      - REDIS_HOST=redis-stack
+      - REDIS_PORT=6379
+    restart: always
+    volumes:
+      - ./omnibase:/var/www/html
+    depends_on:
+      # redis:
+      #   condition: service_healthy
+      postgres:
+        condition: service_healthy
+
+    networks:
+      shared:
+        ipv4_address: 172.19.0.14
+
+          
+networks:
+  shared:
+    name: tummeet
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.19.0.0/24
+
+volumes:
+  # mysql-data:
+  # redis-data:
+  postgres-data:
+  frontend:
