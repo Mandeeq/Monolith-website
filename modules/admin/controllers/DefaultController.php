@@ -11,8 +11,9 @@ class DefaultController extends \helpers\ApiController
      * Renders the index view for the module
      * @return string
      */
-    public function actionIndex()
-    {
-        return [];
-    }
+   public function actionIndex()
+{
+    return $this->render('index'); // assumes views are properly set for this module
+}
+
 }

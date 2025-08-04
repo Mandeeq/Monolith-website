@@ -14,10 +14,10 @@ class DashboardAsset extends AssetBundle
             'rel' => 'icon',
             'sizes' => '64x64',
         ],
-        'oneui/css/dashboard.css',
+        // 'oneui/css/dashboard.css',
     ];
     public $js = [
-        'oneui/js/dashboard.js',
+        // 'oneui/js/dashboard.js',
     ];
     public $depends = [
         'helpers\widgets\swal\AlertAsset',

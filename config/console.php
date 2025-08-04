@@ -17,6 +17,9 @@ $config = [
             'class' => 'cmd\controllers\VoyageController',
             'migrationPath' => $wrapper->load('migrationPaths'),
         ],
+        'seed-crm' => [
+            'class' => 'app\commands\SeedCrmController',
+        ],
     ],
     'components' => [
         'cache' => [
