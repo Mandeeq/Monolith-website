@@ -1,6 +1,6 @@
 <?php
 
-use Yii;
+// use Yii;
 use yii\helpers\Url;
 
 $basePath = \yii::$app->request->baseUrl . '/providers/interface/assets/admin/';
@@ -8,7 +8,7 @@ $basePath = \yii::$app->request->baseUrl . '/providers/interface/assets/admin/';
 <div class="header header-one">
     <a href="index.html"
         class="d-inline-flex d-sm-inline-flex align-items-center d-md-inline-flex d-lg-none align-items-center device-logo">
-        <img src="assets/img/logo.png" class="img-fluid logo2" alt="Logo" />
+        <img src="<?= $basePath ?>assets/img/logo.png" class="img-fluid logo2" alt="Logo" />
     </a>
     <div class="main-logo d-inline float-start d-lg-flex align-items-center d-none d-sm-none d-md-none">
         <div class="logo-white">
