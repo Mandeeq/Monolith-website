@@ -3,27 +3,27 @@
 namespace crm\controllers;
 
 use Yii;
-use crm\models\SupportTickets;
-use crm\models\searches\SupportTicketSearch;
+use crm\models\Customers;
+use crm\models\searches\CustomerSearch;
 use helpers\DashboardController;
 use yii\web\NotFoundHttpException;
 
 /**
- * SupportTicketController implements the CRUD actions for SupportTickets model.
+ * CustomersController implements the CRUD actions for Customers model.
  */
-class SupportTicketController extends DashboardController
+class CustomersController extends DashboardController
 {
     public $permissions = [
-        'app-support-ticket-list'=>'View SupportTickets List',
-        'app-support-ticket-create'=>'Add SupportTickets',
-        'app-support-ticket-update'=>'Edit SupportTickets',
-        'app-support-ticket-delete'=>'Delete SupportTickets',
-        'app-support-ticket-restore'=>'Restore SupportTickets',
+        'app-customers-list'=>'View Customers List',
+        'app-customers-create'=>'Add Customers',
+        'app-customers-update'=>'Edit Customers',
+        'app-customers-delete'=>'Delete Customers',
+        'app-customers-restore'=>'Restore Customers',
         ];
     public function actionIndex()
     {
-        Yii::$app->user->can('app-support-ticket-list');
-        $searchModel = new SupportTicketSearch();
+        Yii::$app->user->can('app-customers-list');
+        $searchModel = new CustomerSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -33,13 +33,13 @@ class SupportTicketController extends DashboardController
     }
     public function actionCreate()
     {
-        Yii::$app->user->can('app-support-ticket-create');
-        $model = new SupportTickets();
+        Yii::$app->user->can('app-customers-create');
+        $model = new Customers();
         if ($this->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
                 if ($model->validate()) {
                     if ($model->save()) {
-                        Yii::$app->session->setFlash('success', 'SupportTickets created successfully');
+                        Yii::$app->session->setFlash('success', 'Customers created successfully');
                         return $this->redirect(['index']);
                     }
                 }
@@ -53,14 +53,14 @@ class SupportTicketController extends DashboardController
     }
     public function actionUpdate($id)
     {
-        Yii::$app->user->can('app-support-ticket-update');
+        Yii::$app->user->can('app-customers-update');
         $model = $this->findModel($id);
 
         if ($this->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
                 if ($model->validate()) {
                     if ($model->save()) {
-                        Yii::$app->session->setFlash('success', 'SupportTickets updated successfully');
+                        Yii::$app->session->setFlash('success', 'Customers updated successfully');
                         return $this->redirect(['index']);
                     }
                 }
@@ -74,19 +74,19 @@ class SupportTicketController extends DashboardController
     {
         $model = $this->findModel($id);
         if ($model->is_deleted) {
-            Yii::$app->user->can('app-support-ticket-restore');
+            Yii::$app->user->can('app-customers-restore');
             $model->restore();
-            Yii::$app->session->setFlash('success', 'SupportTickets has been restored');
+            Yii::$app->session->setFlash('success', 'Customers has been restored');
         } else {
-            Yii::$app->user->can('app-support-ticket-delete');
+            Yii::$app->user->can('app-customers-delete');
             $model->delete();
-            Yii::$app->session->setFlash('success', 'SupportTickets has been deleted');
+            Yii::$app->session->setFlash('success', 'Customers has been deleted');
         }
         return $this->redirect(['index']);
     }
     protected function findModel($id)
     {
-        if (($model = SupportTickets::findOne(['id' => $id])) !== null) {
+        if (($model = Customers::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

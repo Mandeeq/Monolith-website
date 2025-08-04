@@ -4,12 +4,12 @@ namespace crm\models\searches;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use crm\models\Customer;
+use crm\models\Customers;
 
 /**
- * CustomerSearch represents the model behind the search form of `crm\models\Customer`.
+ * CustomerSearch represents the model behind the search form of `crm\models\Customers`.
  */
-class CustomerSearch extends Customer
+class CustomerSearch extends Customers
 {
     /**
      * {@inheritdoc}
@@ -18,7 +18,7 @@ class CustomerSearch extends Customer
     public function rules()
     {
         return [
-            [['id'], 'integer'],
+            [['id', 'is_deleted', 'status'], 'integer'],
             [['name', 'email', 'phone', 'created_at'], 'safe'],
             ['globalSearch', 'safe']
         ];
@@ -42,7 +42,7 @@ class CustomerSearch extends Customer
      */
     public function search($params)
     {
-        $query = Customer::find();
+        $query = Customers::find();
 
         // add conditions that should always apply here
 
@@ -64,6 +64,8 @@ class CustomerSearch extends Customer
         if(isset($this->globalSearch)){
                 $query->orFilterWhere([
             'id' => $this->globalSearch,
+            'is_deleted' => $this->globalSearch,
+            'status' => $this->globalSearch,
             'created_at' => $this->globalSearch,
         ]);
 
@@ -73,6 +75,8 @@ class CustomerSearch extends Customer
         }else{
                 $query->andFilterWhere([
             'id' => $this->id,
+            'is_deleted' => $this->is_deleted,
+            'status' => $this->status,
             'created_at' => $this->created_at,
         ]);
 

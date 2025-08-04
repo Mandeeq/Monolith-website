@@ -4,12 +4,12 @@ namespace crm\models\searches;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use crm\models\SupportTickets;
+use crm\models\Reviews;
 
 /**
- * SupportTicketSearch represents the model behind the search form of `crm\models\SupportTickets`.
+ * ReviewSearch represents the model behind the search form of `crm\models\Reviews`.
  */
-class SupportTicketSearch extends SupportTickets
+class ReviewSearch extends Reviews
 {
     /**
      * {@inheritdoc}
@@ -18,8 +18,8 @@ class SupportTicketSearch extends SupportTickets
     public function rules()
     {
         return [
-            [['id', 'customer_id', 'is_deleted', 'status'], 'integer'],
-            [['subject', 'description', 'created_at'], 'safe'],
+            [['id', 'customer_id', 'order_id', 'rating', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['product_name', 'review_text'], 'safe'],
             ['globalSearch', 'safe']
         ];
     }
@@ -42,7 +42,7 @@ class SupportTicketSearch extends SupportTickets
      */
     public function search($params)
     {
-        $query = SupportTickets::find();
+        $query = Reviews::find();
 
         // add conditions that should always apply here
 
@@ -65,24 +65,28 @@ class SupportTicketSearch extends SupportTickets
                 $query->orFilterWhere([
             'id' => $this->globalSearch,
             'customer_id' => $this->globalSearch,
-            'is_deleted' => $this->globalSearch,
+            'order_id' => $this->globalSearch,
+            'rating' => $this->globalSearch,
             'status' => $this->globalSearch,
             'created_at' => $this->globalSearch,
+            'updated_at' => $this->globalSearch,
         ]);
 
-        $query->orFilterWhere(['ilike', 'subject', $this->globalSearch])
-            ->orFilterWhere(['ilike', 'description', $this->globalSearch]);
+        $query->orFilterWhere(['ilike', 'product_name', $this->globalSearch])
+            ->orFilterWhere(['ilike', 'review_text', $this->globalSearch]);
         }else{
                 $query->andFilterWhere([
             'id' => $this->id,
             'customer_id' => $this->customer_id,
-            'is_deleted' => $this->is_deleted,
+            'order_id' => $this->order_id,
+            'rating' => $this->rating,
             'status' => $this->status,
             'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['ilike', 'subject', $this->subject])
-            ->andFilterWhere(['ilike', 'description', $this->description]);
+        $query->andFilterWhere(['ilike', 'product_name', $this->product_name])
+            ->andFilterWhere(['ilike', 'review_text', $this->review_text]);
         }
         return $dataProvider;
     }

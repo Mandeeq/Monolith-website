@@ -12,7 +12,7 @@ class m250802_213837_create_support_ticket_table extends Migration
      */
     public function safeUp()
     {
-        $this->createTable('support_ticket', [
+        $this->createTable('support_tickets', [
             'id' => $this->primaryKey(),
             'customer_id' => $this->integer()->notNull(),
             'subject' => $this->string()->notNull(),
@@ -24,9 +24,9 @@ class m250802_213837_create_support_ticket_table extends Migration
 
         $this->addForeignKey(
             'fk-support-customer_id',
-            'support_ticket',
+            'support_tickets',
             'customer_id',
-            'customer',
+            'customers',
             'id',
             'CASCADE'
         );
@@ -37,6 +37,6 @@ class m250802_213837_create_support_ticket_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('{{%support_ticket}}');
+        $this->dropTable('{{%support_tickets}}');
     }
 }

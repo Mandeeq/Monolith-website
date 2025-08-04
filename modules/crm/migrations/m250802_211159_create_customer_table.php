@@ -12,7 +12,7 @@ class m250802_211159_create_customer_table extends Migration
      */
     public function safeUp()
     {
-        $this->createTable('customer', [
+        $this->createTable('customers', [
             'id' => $this->primaryKey(),
             'name' => $this->string(100)->notNull(),
             'email' => $this->string(150)->notNull()->unique(),
@@ -28,6 +28,6 @@ class m250802_211159_create_customer_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('{{%customer}}');
+        $this->dropTable('{{%customers}}');
     }
 }

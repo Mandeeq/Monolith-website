@@ -3,27 +3,27 @@
 namespace crm\controllers;
 
 use Yii;
-use crm\models\SupportTickets;
-use crm\models\searches\SupportTicketSearch;
+use crm\models\Orders;
+use crm\models\searches\OrderSearch;
 use helpers\DashboardController;
 use yii\web\NotFoundHttpException;
 
 /**
- * SupportTicketController implements the CRUD actions for SupportTickets model.
+ * OrdersController implements the CRUD actions for Orders model.
  */
-class SupportTicketController extends DashboardController
+class OrdersController extends DashboardController
 {
     public $permissions = [
-        'app-support-ticket-list'=>'View SupportTickets List',
-        'app-support-ticket-create'=>'Add SupportTickets',
-        'app-support-ticket-update'=>'Edit SupportTickets',
-        'app-support-ticket-delete'=>'Delete SupportTickets',
-        'app-support-ticket-restore'=>'Restore SupportTickets',
+        'crm-orders-list'=>'View Orders List',
+        'crm-orders-create'=>'Add Orders',
+        'crm-orders-update'=>'Edit Orders',
+        'crm-orders-delete'=>'Delete Orders',
+        'crm-orders-restore'=>'Restore Orders',
         ];
     public function actionIndex()
     {
-        Yii::$app->user->can('app-support-ticket-list');
-        $searchModel = new SupportTicketSearch();
+        Yii::$app->user->can('crm-orders-list');
+        $searchModel = new OrderSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -33,13 +33,13 @@ class SupportTicketController extends DashboardController
     }
     public function actionCreate()
     {
-        Yii::$app->user->can('app-support-ticket-create');
-        $model = new SupportTickets();
+        Yii::$app->user->can('crm-orders-create');
+        $model = new Orders();
         if ($this->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
                 if ($model->validate()) {
                     if ($model->save()) {
-                        Yii::$app->session->setFlash('success', 'SupportTickets created successfully');
+                        Yii::$app->session->setFlash('success', 'Orders created successfully');
                         return $this->redirect(['index']);
                     }
                 }
@@ -53,14 +53,14 @@ class SupportTicketController extends DashboardController
     }
     public function actionUpdate($id)
     {
-        Yii::$app->user->can('app-support-ticket-update');
+        Yii::$app->user->can('crm-orders-update');
         $model = $this->findModel($id);
 
         if ($this->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
                 if ($model->validate()) {
                     if ($model->save()) {
-                        Yii::$app->session->setFlash('success', 'SupportTickets updated successfully');
+                        Yii::$app->session->setFlash('success', 'Orders updated successfully');
                         return $this->redirect(['index']);
                     }
                 }
@@ -74,19 +74,19 @@ class SupportTicketController extends DashboardController
     {
         $model = $this->findModel($id);
         if ($model->is_deleted) {
-            Yii::$app->user->can('app-support-ticket-restore');
+            Yii::$app->user->can('crm-orders-restore');
             $model->restore();
-            Yii::$app->session->setFlash('success', 'SupportTickets has been restored');
+            Yii::$app->session->setFlash('success', 'Orders has been restored');
         } else {
-            Yii::$app->user->can('app-support-ticket-delete');
+            Yii::$app->user->can('crm-orders-delete');
             $model->delete();
-            Yii::$app->session->setFlash('success', 'SupportTickets has been deleted');
+            Yii::$app->session->setFlash('success', 'Orders has been deleted');
         }
         return $this->redirect(['index']);
     }
     protected function findModel($id)
     {
-        if (($model = SupportTickets::findOne(['id' => $id])) !== null) {
+        if (($model = Orders::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

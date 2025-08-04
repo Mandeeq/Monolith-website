@@ -31,20 +31,12 @@ class m250802_213730_create_order_table extends Migration
             'fk-orders-customer_id',
             '{{%orders}}',
             'customer_id',
-            '{{%customer}}',
+            '{{%customers}}',
             'id',
             'CASCADE'
         );
 
-        // Optional FK to product table
-        // $this->addForeignKey(
-        //     'fk-order_history-product_id',
-        //     '{{%order_history}}',
-        //     'product_id',
-        //     '{{%product}}',
-        //     'id',
-        //     'SET NULL'
-        // );
+
 
         $this->createTable('{{%order_items}}', [
             'id' => $this->primaryKey(),

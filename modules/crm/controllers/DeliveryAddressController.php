@@ -3,27 +3,27 @@
 namespace crm\controllers;
 
 use Yii;
-use crm\models\SupportTickets;
-use crm\models\searches\SupportTicketSearch;
+use crm\models\DeliveryAddress;
+use crm\models\searches\DeliveryAddressSearch;
 use helpers\DashboardController;
 use yii\web\NotFoundHttpException;
 
 /**
- * SupportTicketController implements the CRUD actions for SupportTickets model.
+ * DeliveryAddressController implements the CRUD actions for DeliveryAddress model.
  */
-class SupportTicketController extends DashboardController
+class DeliveryAddressController extends DashboardController
 {
     public $permissions = [
-        'app-support-ticket-list'=>'View SupportTickets List',
-        'app-support-ticket-create'=>'Add SupportTickets',
-        'app-support-ticket-update'=>'Edit SupportTickets',
-        'app-support-ticket-delete'=>'Delete SupportTickets',
-        'app-support-ticket-restore'=>'Restore SupportTickets',
+        'crm-delivery-address-list'=>'View DeliveryAddress List',
+        'crm-delivery-address-create'=>'Add DeliveryAddress',
+        'crm-delivery-address-update'=>'Edit DeliveryAddress',
+        'crm-delivery-address-delete'=>'Delete DeliveryAddress',
+        'crm-delivery-address-restore'=>'Restore DeliveryAddress',
         ];
     public function actionIndex()
     {
-        Yii::$app->user->can('app-support-ticket-list');
-        $searchModel = new SupportTicketSearch();
+        Yii::$app->user->can('crm-delivery-address-list');
+        $searchModel = new DeliveryAddressSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -33,13 +33,13 @@ class SupportTicketController extends DashboardController
     }
     public function actionCreate()
     {
-        Yii::$app->user->can('app-support-ticket-create');
-        $model = new SupportTickets();
+        Yii::$app->user->can('crm-delivery-address-create');
+        $model = new DeliveryAddress();
         if ($this->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
                 if ($model->validate()) {
                     if ($model->save()) {
-                        Yii::$app->session->setFlash('success', 'SupportTickets created successfully');
+                        Yii::$app->session->setFlash('success', 'DeliveryAddress created successfully');
                         return $this->redirect(['index']);
                     }
                 }
@@ -53,14 +53,14 @@ class SupportTicketController extends DashboardController
     }
     public function actionUpdate($id)
     {
-        Yii::$app->user->can('app-support-ticket-update');
+        Yii::$app->user->can('crm-delivery-address-update');
         $model = $this->findModel($id);
 
         if ($this->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
                 if ($model->validate()) {
                     if ($model->save()) {
-                        Yii::$app->session->setFlash('success', 'SupportTickets updated successfully');
+                        Yii::$app->session->setFlash('success', 'DeliveryAddress updated successfully');
                         return $this->redirect(['index']);
                     }
                 }
@@ -74,19 +74,19 @@ class SupportTicketController extends DashboardController
     {
         $model = $this->findModel($id);
         if ($model->is_deleted) {
-            Yii::$app->user->can('app-support-ticket-restore');
+            Yii::$app->user->can('crm-delivery-address-restore');
             $model->restore();
-            Yii::$app->session->setFlash('success', 'SupportTickets has been restored');
+            Yii::$app->session->setFlash('success', 'DeliveryAddress has been restored');
         } else {
-            Yii::$app->user->can('app-support-ticket-delete');
+            Yii::$app->user->can('crm-delivery-address-delete');
             $model->delete();
-            Yii::$app->session->setFlash('success', 'SupportTickets has been deleted');
+            Yii::$app->session->setFlash('success', 'DeliveryAddress has been deleted');
         }
         return $this->redirect(['index']);
     }
     protected function findModel($id)
     {
-        if (($model = SupportTickets::findOne(['id' => $id])) !== null) {
+        if (($model = DeliveryAddress::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

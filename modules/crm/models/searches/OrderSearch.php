@@ -4,12 +4,12 @@ namespace crm\models\searches;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use crm\models\SupportTickets;
+use crm\models\Orders;
 
 /**
- * SupportTicketSearch represents the model behind the search form of `crm\models\SupportTickets`.
+ * OrderSearch represents the model behind the search form of `crm\models\Orders`.
  */
-class SupportTicketSearch extends SupportTickets
+class OrderSearch extends Orders
 {
     /**
      * {@inheritdoc}
@@ -18,8 +18,9 @@ class SupportTicketSearch extends SupportTickets
     public function rules()
     {
         return [
-            [['id', 'customer_id', 'is_deleted', 'status'], 'integer'],
-            [['subject', 'description', 'created_at'], 'safe'],
+            [['id', 'customer_id', 'status', 'created_at', 'updated_at', 'is_deleted'], 'integer'],
+            [['order_number', 'payment_method'], 'safe'],
+            [['total_amount'], 'number'],
             ['globalSearch', 'safe']
         ];
     }
@@ -42,7 +43,7 @@ class SupportTicketSearch extends SupportTickets
      */
     public function search($params)
     {
-        $query = SupportTickets::find();
+        $query = Orders::find();
 
         // add conditions that should always apply here
 
@@ -65,24 +66,28 @@ class SupportTicketSearch extends SupportTickets
                 $query->orFilterWhere([
             'id' => $this->globalSearch,
             'customer_id' => $this->globalSearch,
-            'is_deleted' => $this->globalSearch,
             'status' => $this->globalSearch,
+            'total_amount' => $this->globalSearch,
             'created_at' => $this->globalSearch,
+            'updated_at' => $this->globalSearch,
+            'is_deleted' => $this->globalSearch,
         ]);
 
-        $query->orFilterWhere(['ilike', 'subject', $this->globalSearch])
-            ->orFilterWhere(['ilike', 'description', $this->globalSearch]);
+        $query->orFilterWhere(['ilike', 'order_number', $this->globalSearch])
+            ->orFilterWhere(['ilike', 'payment_method', $this->globalSearch]);
         }else{
                 $query->andFilterWhere([
             'id' => $this->id,
             'customer_id' => $this->customer_id,
-            'is_deleted' => $this->is_deleted,
             'status' => $this->status,
+            'total_amount' => $this->total_amount,
             'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'is_deleted' => $this->is_deleted,
         ]);
 
-        $query->andFilterWhere(['ilike', 'subject', $this->subject])
-            ->andFilterWhere(['ilike', 'description', $this->description]);
+        $query->andFilterWhere(['ilike', 'order_number', $this->order_number])
+            ->andFilterWhere(['ilike', 'payment_method', $this->payment_method]);
         }
         return $dataProvider;
     }

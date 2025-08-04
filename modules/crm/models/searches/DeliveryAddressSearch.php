@@ -4,12 +4,12 @@ namespace crm\models\searches;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use crm\models\SupportTickets;
+use crm\models\DeliveryAddress;
 
 /**
- * SupportTicketSearch represents the model behind the search form of `crm\models\SupportTickets`.
+ * DeliveryAddressSearch represents the model behind the search form of `crm\models\DeliveryAddress`.
  */
-class SupportTicketSearch extends SupportTickets
+class DeliveryAddressSearch extends DeliveryAddress
 {
     /**
      * {@inheritdoc}
@@ -18,8 +18,8 @@ class SupportTicketSearch extends SupportTickets
     public function rules()
     {
         return [
-            [['id', 'customer_id', 'is_deleted', 'status'], 'integer'],
-            [['subject', 'description', 'created_at'], 'safe'],
+            [['id', 'customer_id', 'is_default', 'created_at', 'updated_at'], 'integer'],
+            [['label', 'address', 'city', 'postal_code'], 'safe'],
             ['globalSearch', 'safe']
         ];
     }
@@ -42,7 +42,7 @@ class SupportTicketSearch extends SupportTickets
      */
     public function search($params)
     {
-        $query = SupportTickets::find();
+        $query = DeliveryAddress::find();
 
         // add conditions that should always apply here
 
@@ -65,24 +65,28 @@ class SupportTicketSearch extends SupportTickets
                 $query->orFilterWhere([
             'id' => $this->globalSearch,
             'customer_id' => $this->globalSearch,
-            'is_deleted' => $this->globalSearch,
-            'status' => $this->globalSearch,
+            'is_default' => $this->globalSearch,
             'created_at' => $this->globalSearch,
+            'updated_at' => $this->globalSearch,
         ]);
 
-        $query->orFilterWhere(['ilike', 'subject', $this->globalSearch])
-            ->orFilterWhere(['ilike', 'description', $this->globalSearch]);
+        $query->orFilterWhere(['ilike', 'label', $this->globalSearch])
+            ->orFilterWhere(['ilike', 'address', $this->globalSearch])
+            ->orFilterWhere(['ilike', 'city', $this->globalSearch])
+            ->orFilterWhere(['ilike', 'postal_code', $this->globalSearch]);
         }else{
                 $query->andFilterWhere([
             'id' => $this->id,
             'customer_id' => $this->customer_id,
-            'is_deleted' => $this->is_deleted,
-            'status' => $this->status,
+            'is_default' => $this->is_default,
             'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['ilike', 'subject', $this->subject])
-            ->andFilterWhere(['ilike', 'description', $this->description]);
+        $query->andFilterWhere(['ilike', 'label', $this->label])
+            ->andFilterWhere(['ilike', 'address', $this->address])
+            ->andFilterWhere(['ilike', 'city', $this->city])
+            ->andFilterWhere(['ilike', 'postal_code', $this->postal_code]);
         }
         return $dataProvider;
     }

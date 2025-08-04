@@ -19,7 +19,7 @@ class SeedCrmController extends Controller
         try {
             // Seed Customers
             for ($i = 0; $i < 100; $i++) {
-                $db->createCommand()->insert('customer', [
+                $db->createCommand()->insert('customers', [
                     'name' => $faker->name,
                     'email' => $faker->unique()->safeEmail,
                     'phone' => $faker->phoneNumber,
@@ -30,25 +30,66 @@ class SeedCrmController extends Controller
             echo "✅ Inserted 100 customers.\n";
 
             // Fetch all customer IDs
-            $customerIds = (new \yii\db\Query())->select('id')->from('customer')->column();
+            $customerIds = (new \yii\db\Query())->select('id')->from('customers')->column();
 
             // Seed Orders
+            $orderCount = 0;
+
             foreach ($customerIds as $customerId) {
                 for ($j = 0; $j < 30; $j++) {
-                    $db->createCommand()->insert('order', [
+                    $orderNumber = 'ORD' . strtoupper($faker->bothify('####-???'));
+                    $createdAt = time();
+
+                    // Step 1: Insert Order
+                    $db->createCommand()->insert('orders', [
+                        'order_number' => $orderNumber,
                         'customer_id' => $customerId,
-                        'product_name' => $faker->word,
-                        'amount' => $faker->randomFloat(2, 10, 500),
-                        'order_date' => date('Y-m-d H:i:s'),
+                        'status' => $faker->numberBetween(0, 3), // e.g., 0=pending, 1=processing, etc.
+                        'payment_method' => $faker->randomElement(['mpesa', 'paypal', 'credit_card']),
+                        'total_amount' => 0, // placeholder, update later
+                        'created_at' => $createdAt,
+                        'updated_at' => $createdAt,
+                        'is_deleted' => 0,
                     ])->execute();
+
+                    $orderId = $db->getLastInsertID();
+                    $totalAmount = 0;
+
+                    // Step 2: Generate Order Items
+                    $itemCount = $faker->numberBetween(1, 5);
+                    for ($k = 0; $k < $itemCount; $k++) {
+                        $quantity = $faker->numberBetween(1, 3);
+                        $unitPrice = $faker->randomFloat(2, 100, 2000);
+                        $totalPrice = $unitPrice * $quantity;
+
+                        $db->createCommand()->insert('order_items', [
+                            'order_id' => $orderId,
+                            'product_name' => $faker->words(2, true),
+                            'quantity' => $quantity,
+                            'unit_price' => $unitPrice,
+                            'total_price' => $totalPrice,
+                        ])->execute();
+
+                        $totalAmount += $totalPrice;
+                    }
+
+                    // Step 3: Update total in orders
+                    $db->createCommand()->update('orders', [
+                        'total_amount' => $totalAmount,
+                    ], ['id' => $orderId])->execute();
+
+                    $orderCount++;
                 }
             }
+
+            echo "✅ Inserted {$orderCount} orders with items.\n";
+
 
             echo "✅ Inserted 3000 orders.\n";
 
             // Seed Support Tickets
             foreach ($customerIds as $customerId) {
-                $db->createCommand()->insert('support_ticket', [
+                $db->createCommand()->insert('support_tickets', [
                     'customer_id' => $customerId,
                     'subject' => $faker->sentence(6),
                     'description' => $faker->paragraph,
@@ -59,34 +100,51 @@ class SeedCrmController extends Controller
 
             echo "✅ Inserted 100 support tickets.\n";
 
-            // ✅ Seed Order History
-            foreach ($customerIds as $customerId) {
-                for ($k = 0; $k < 15; $k++) {
-                    $quantity = $faker->numberBetween(1, 5);
-                    $unitPrice = $faker->randomFloat(2, 50, 1500);
+            $orderIds = (new \yii\db\Query())->select('id')->from('orders')->column();
 
-                    $db->createCommand()->insert('order_history', [
+            foreach ($customerIds as $customerId) {
+                for ($r = 0; $r < 10; $r++) {
+                    $db->createCommand()->insert('reviews', [
                         'customer_id' => $customerId,
-                        'order_number' => 'ORD' . strtoupper($faker->bothify('####-???')),
-                        'product_name' => $faker->word . ' ' . $faker->randomElement(['Device', 'Tool', 'Item']),
-                        'product_id' => null,
-                        'quantity' => $quantity,
-                        'unit_price' => $unitPrice,
-                        'total_price' => $quantity * $unitPrice,
-                        'order_status' => $faker->numberBetween(0, 4), // match your status constants
-                        'payment_status' => $faker->numberBetween(0, 2),
-                        'ordered_at' => $faker->dateTimeThisYear->format('Y-m-d H:i:s'),
+                        'product_name' => $faker->word,
+                        'order_id' => $faker->optional()->randomElement($orderIds),
+                        'rating' => $faker->numberBetween(1, 5),
+                        'review_text' => $faker->sentence(10),
+                        'status' => $faker->numberBetween(0, 2),
                         'created_at' => time(),
                         'updated_at' => time(),
                     ])->execute();
                 }
             }
 
-            echo "✅ Inserted " . (count($customerIds) * 15) . " order history records.\n";
+            echo "✅ Inserted 100 reviews.\n";
+
+            foreach ($customerIds as $customerId) {
+                $addressCount = $faker->numberBetween(1, 3);
+                $defaultAssigned = false;
+
+                for ($a = 0; $a < $addressCount; $a++) {
+                    $isDefault = (!$defaultAssigned || $a == $addressCount - 1) ? 1 : 0;
+                    $defaultAssigned = true;
+
+                    $db->createCommand()->insert('delivery_address', [
+                        'customer_id' => $customerId,
+                        'label' => $faker->randomElement(['Home', 'Office', 'Other']),
+                        'address' => $faker->address,
+                        'city' => $faker->city,
+                        'postal_code' => $faker->postcode,
+                        'is_default' => $isDefault,
+                        'created_at' => time(),
+                        'updated_at' => time(),
+                    ])->execute();
+                }
+            }
+
+            echo "✅ Seeded delivery addresses for all customers.\n";
+
 
             $transaction->commit();
             echo "🎉 CRM seeding completed successfully.\n";
-
         } catch (\Throwable $e) {
             $transaction->rollBack();
             echo "❌ Error during seeding: " . $e->getMessage() . "\n";
