@@ -6,7 +6,7 @@ use Yii;
 use yii\web\Response;
 class HomeController extends \helpers\DashboardController
 {
-    public $layout = 'admin';
+    // public $layout = 'admin';
     /**
      * {@inheritdoc}
      */
