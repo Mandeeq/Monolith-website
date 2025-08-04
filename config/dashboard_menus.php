@@ -23,19 +23,19 @@ $menus = [
         'items' => [
             [
                 'label' => 'Customers',
-                'url' => ['/crm/customer']
+                'url' => ['/crm/customers']
             ],
             [
                 'label' => 'Orders',
-                'url' => ['/crm/order']
+                'url' => ['/crm/orders']
             ],
             [
                 'label' => 'Tickets',
-                'url' => ['/crm/support-ticket']
+                'url' => ['/crm/support-tickets']
             ],
             [
-                'label'=> 'Order History',
-                'url'=> ['/crm/order-history']
+                'label'=> 'Reviews',
+                'url'=> ['/crm/reviews']
             ]
         ],
     ],
