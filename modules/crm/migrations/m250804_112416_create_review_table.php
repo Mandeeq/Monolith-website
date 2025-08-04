@@ -22,6 +22,7 @@ class m250804_112416_create_review_table extends Migration
             'status' => $this->tinyInteger()->notNull()->defaultValue(0), // pending
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
+             'is_deleted' => $this->integer(2)->notNull()->defaultValue(0),
         ]);
 
         $this->addForeignKey(

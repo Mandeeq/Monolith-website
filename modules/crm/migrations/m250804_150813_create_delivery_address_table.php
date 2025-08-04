@@ -22,6 +22,7 @@ class m250804_150813_create_delivery_address_table extends Migration
             'is_default' => $this->tinyInteger()->notNull()->defaultValue(0),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
+             'is_deleted' => $this->integer(2)->notNull()->defaultValue(0),
         ]);
 
         $this->addForeignKey(
