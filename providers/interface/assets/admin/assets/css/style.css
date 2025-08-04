@@ -669,7 +669,7 @@ strong {
   -moz-transition: all 0.5s;
   -o-transition: all 0.5s;
   transition: all 0.5s;
-  padding: 8px 15px;
+  /* padding: 8px 15px; */
 }
 .btn:hover {
   -webkit-transition: all 0.5s;
