@@ -4,9 +4,9 @@
 /** @var string $content */
 
 use yii\helpers\Html;
-use ui\bundles\DashboardAsset;
+use ui\bundles\MainAsset;
 
-DashboardAsset::register($this);
+MainAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>

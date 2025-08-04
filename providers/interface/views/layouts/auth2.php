@@ -4,9 +4,9 @@
 /** @var string $content */
 
 use yii\helpers\Html;
-use ui\bundles\AuthAsset;
+use ui\bundles\MainAsset;
 
-AuthAsset::register($this);
+MainAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
