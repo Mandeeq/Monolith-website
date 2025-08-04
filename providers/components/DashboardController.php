@@ -5,7 +5,7 @@ namespace helpers;
 
 class DashboardController extends  \yii\web\Controller
 {
-    public $layout = 'dashboard';
+    // public $layout = 'dashboard';
     // public $layout = 'admin';
     public function behaviors()
     {
