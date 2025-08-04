@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
               'type' => 'text',
               'text' => 'Create Support Tickets',
               'theme' => 'primary',
-              'visible' => Yii::$app->user->can('app-support-ticket-create', true)
+              'visible' => Yii::$app->user->can('crm-support-tickets-create', true)
             ],
             'modal' => ['title' => 'New Support Tickets']
           ]) ?>
@@ -64,11 +64,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
                 ],
                 'visibleButtons' => [
-                    'update' => Yii::$app->user->can('app-support-ticket-update',true),
+                    'update' => Yii::$app->user->can('crm-support-tickets-update',true),
                     'trash' => function ($model){
                          return $model->is_deleted !== 1 ? 
-                                Yii::$app->user->can('app-support-ticket-delete',true) : 
-                                Yii::$app->user->can('app-support-ticket-restore',true);
+                                Yii::$app->user->can('crm-support-tickets-delete',true) : 
+                                Yii::$app->user->can('crm-support-tickets-restore',true);
                     },
                 ],
             ],
