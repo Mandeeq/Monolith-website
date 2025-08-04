@@ -5,14 +5,14 @@ use helpers\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
 
-$basePath = Yii::$app->request->baseUrl . '/providers/interface/assets/site/';
+$basePath = '/providers/interface/assets/admin/assets/img/';
 
 ?>
 
-<?= Html::a(Html::img($basePath . 'logo_pic.png', [
+<?= Html::a(Html::img($basePath . 'logo-small.png', [
     'class' => 'img-fluid logo-dark mb-2 logo-color',
     'style' => 'width: 170px !important; height: 170px !important; border-radius: 50% !important;',
-    'alt' => 'Logo'
+    'alt' => 'logaga'
 ]), ['/frontend/site']) ?>
 
 <div class="loginbox">
