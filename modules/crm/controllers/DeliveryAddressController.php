@@ -47,10 +47,16 @@ class DeliveryAddressController extends DashboardController
         } else {
             $model->loadDefaultValues();
         }
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('create', [
+                'model' => $model,
+            ]);
+        }
         return $this->render('create', [
             'model' => $model,
         ]);
     }
+
     public function actionUpdate($id)
     {
         Yii::$app->user->can('crm-delivery-address-update');
@@ -65,6 +71,11 @@ class DeliveryAddressController extends DashboardController
                     }
                 }
             }
+        }
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('update', [
+                'model' => $model,
+            ]);
         }
         return $this->render('update', [
             'model' => $model,

@@ -47,6 +47,11 @@ class ReviewsController extends DashboardController
         } else {
             $model->loadDefaultValues();
         }
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('create', [
+                'model' => $model,
+            ]);
+        }
         return $this->render('create', [
             'model' => $model,
         ]);
@@ -65,6 +70,11 @@ class ReviewsController extends DashboardController
                     }
                 }
             }
+        }
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('update', [
+                'model' => $model,
+            ]);
         }
         return $this->render('update', [
             'model' => $model,

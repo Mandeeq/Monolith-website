@@ -26,6 +26,7 @@ class CustomersController extends DashboardController
         $searchModel = new CustomerSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
+        
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -47,9 +48,17 @@ class CustomersController extends DashboardController
         } else {
             $model->loadDefaultValues();
         }
+        
+        if (Yii::$app->request->isAjax) {
+        return $this->renderAjax('create', [
+            'model' => $model,
+        ]);
+    }else{
         return $this->render('create', [
             'model' => $model,
         ]);
+    }
+        
     }
     public function actionUpdate($id)
     {
@@ -66,9 +75,16 @@ class CustomersController extends DashboardController
                 }
             }
         }
-        return $this->render('update', [
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('update', [
             'model' => $model,
-        ]);
+            ]);
+        } else {
+            return $this->render('update', [
+            'model' => $model,
+            ]);
+        }
     }
     public function actionTrash($id)
     {
