@@ -11,11 +11,16 @@ class Html extends \yii\helpers\BaseHtml
     protected static function bS4($param, $options = [], $button = null)
     {
         $param = static::initOptions($param);
-        if (!$param['appearence']['visible']){
+        if (!$param['appearence']['visible']) {
             return false;
         }
         if ($param['appearence']['type'] == 'icon') {
-            $name = '<i class="fa fa-fw fa-' . $param['appearence']['icon'] . '"></i>';
+            $iconClass = 'fa fa-fw fa-' . $param['appearence']['icon'];
+            if (!empty($param['appearence']['class'])) {
+                $iconClass .= ' ' . $param['appearence']['class']; // 👈 merge custom class
+            }
+            $styleAttr = !empty($param['appearence']['style']) ? ' style="' . $param['appearence']['style'] . '"' : '';
+            $name = '<i class="' . $iconClass . '"' . $styleAttr . '></i>';
         } elseif ($param['appearence']['type'] == 'text') {
             $name = $param['appearence']['text'];
         } elseif ($param['appearence']['type'] == 'iconText') {
@@ -42,8 +47,7 @@ class Html extends \yii\helpers\BaseHtml
             }
             $button = static::a('<span class="btn btn-' . $param['appearence']['size'] . ' btn-' . $param['appearence']['theme'] . '">' . $name . '</span>', $param['url'], $options);
         }
-            return $button;
-        
+        return $button;
     }
 
     protected static function initOptions($clientOptions = [])
