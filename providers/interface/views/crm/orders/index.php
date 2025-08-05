@@ -44,7 +44,26 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'order_number',
             'customer_id',
-            'status',
+            [
+              'attribute' => 'status',
+              'format' => 'raw',
+              'value' => function ($model) {
+                switch ($model->status) {
+                  case 1:
+                    return '<span class="badge bg-success">Delivered</span>';
+                  case 0:
+                    return '<span class="badge bg-danger">Cancelled</span>';
+                  case 2:
+                    return '<span class="badge bg-info">Processing</span>';
+                  case 3:
+                    return '<span class="badge bg-primary">Shipped</span>';
+                  case 4:
+                    return '<span class="badge bg-danger">Cancelled</span>';
+                  default:
+                    return '<span class="badge bg-secondary">Unknown</span>';
+                }
+              },
+            ],
             'payment_method',
             //'total_amount',
             //'created_at',
@@ -57,12 +76,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'contentOptions' => ['style'=>'text-align: center;'],
                  'buttons' => [
                     'update' => function ($url, $model, $key) {
-                        return Html::customButton(['type' => 'modal', 'url' => Url::toRoute(['update', 'id' => $model->id]), 'modal' => ['title' => 'Update  Orders'], 'appearence' => ['icon' => 'edit', 'theme' => 'info']]);
+                        return Html::customButton(['type' => 'modal', 'url' => Url::toRoute(['update', 'id' => $model->id]), 'modal' => ['title' => 'Update  Orders'], 'appearence' => ['icon' => 'edit', 'theme' => '', 'class' => 'text-primary']]);
                     },
                     'trash' => function ($url, $model, $key) {
                         return $model->is_deleted !== 1 ?
-                            Html::customButton(['type' => 'link', 'url' => Url::toRoute(['trash', 'id' => $model->id]),  'appearence' => ['icon' => 'trash', 'theme' => 'danger', 'data' => ['message' => 'Do you want to delete this orders?']]]) :
-                            Html::customButton(['type' => 'link', 'url' => Url::toRoute(['trash', 'id' => $model->id]),  'appearence' => ['icon' => 'undo', 'theme' => 'warning', 'data' => ['message' => 'Do you want to restore this orders?']]]);
+                            Html::customButton(['type' => 'link', 'url' => Url::toRoute(['trash', 'id' => $model->id]),  'appearence' => ['icon' => 'trash', 'theme' => '', 'class' => 'text-danger', 'data' => ['message' => 'Do you want to delete this orders?']]]) :
+                            Html::customButton(['type' => 'link', 'url' => Url::toRoute(['trash', 'id' => $model->id]),  'appearence' => ['icon' => 'undo', 'theme' => '', 'class' => 'text-danger', 'data' => ['message' => 'Do you want to restore this orders?']]]);
                     },
                 ],
                 'visibleButtons' => [
