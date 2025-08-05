@@ -15,12 +15,7 @@ class Html extends \yii\helpers\BaseHtml
             return false;
         }
         if ($param['appearence']['type'] == 'icon') {
-            $iconClass = 'fa fa-fw fa-' . $param['appearence']['icon'];
-            if (!empty($param['appearence']['class'])) {
-                $iconClass .= ' ' . $param['appearence']['class']; // 👈 merge custom class
-            }
-            $styleAttr = !empty($param['appearence']['style']) ? ' style="' . $param['appearence']['style'] . '"' : '';
-            $name = '<i class="' . $iconClass . '"' . $styleAttr . '></i>';
+            $name = '<i class="fa fa-fw fa-' . $param['appearence']['icon'] . '"></i>';
         } elseif ($param['appearence']['type'] == 'text') {
             $name = $param['appearence']['text'];
         } elseif ($param['appearence']['type'] == 'iconText') {
