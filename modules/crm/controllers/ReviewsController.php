@@ -22,7 +22,7 @@ class ReviewsController extends DashboardController
         ];
     public function actionIndex()
     {
-        Yii::$app->user->can('app-reviews-list');
+        // Yii::$app->user->can('app-reviews-list');
         $searchModel = new ReviewSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 

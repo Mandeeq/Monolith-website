@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use Yii;
+// use Yii;
 
 /** @var yii\web\View $this */
 /** @var crm\models\searches\SupportTicketSearch $model */

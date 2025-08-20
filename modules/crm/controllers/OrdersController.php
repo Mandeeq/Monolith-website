@@ -22,7 +22,7 @@ class OrdersController extends DashboardController
         ];
     public function actionIndex()
     {
-        Yii::$app->user->can('crm-orders-list');
+        // Yii::$app->user->can('crm-orders-list');
         $searchModel = new OrderSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 

@@ -22,7 +22,7 @@ class DeliveryAddressController extends DashboardController
         ];
     public function actionIndex()
     {
-        Yii::$app->user->can('crm-delivery-address-list');
+        // Yii::$app->user->can('crm-delivery-address-list');
         $searchModel = new DeliveryAddressSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 

@@ -33,7 +33,7 @@ class SupportTicketsController extends DashboardController
     }
     public function actionCreate()
     {
-        Yii::$app->user->can('crm-support-tickets-create');
+        // Yii::$app->user->can('crm-support-tickets-create');
         $model = new SupportTickets();
         if ($this->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {

@@ -22,7 +22,7 @@ class CustomersController extends DashboardController
         ];
     public function actionIndex()
     {
-        Yii::$app->user->can('app-customers-list');
+        // Yii::$app->user->can('app-customers-list');
         $searchModel = new CustomerSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 

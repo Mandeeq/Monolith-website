@@ -111,10 +111,17 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 $_SERVER['APP_VERSION'] . '/about' => 'site/about',
+                 'cart' => 'crm/cart/index',
+                 'cart/item' => 'crm/cart-item/index',
+                 'product' => 'crm/product/index',
+                 'product/add/<product_id:\d+>' => 'crm/product/add',
+                 
+
                 [
                     'pattern' => $_SERVER['APP_VERSION'] . '/docs/openapi-json-resource',
                     'route' => 'site/json-docs',
-                    'suffix' => '.json'
+                    'suffix' => '.json',
+                   
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
@@ -155,5 +162,11 @@ if ($_SERVER['ENVIRONMENT'] == 'dev') {
         ],
     ];
 }
-array_push($config,);
+
+
+$config['modules']['qaffee'] = [
+    'class' => 'app\modules\qaffee\Module',
+];
+
+// array_push($config,);
 return $config;
