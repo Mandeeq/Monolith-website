@@ -27,6 +27,7 @@ class Module extends \helpers\ApiModule
      */
     public $controllerNamespace = 'qaffee\controllers';
     public $name = 'qaffee';
+    public $layout = 'auth';
 
     /**
      * {@inheritdoc}
@@ -34,8 +35,10 @@ class Module extends \helpers\ApiModule
     public function init()
     {
         parent::init();
+           $this->layoutPath = '@app/providers/interface/views/layouts'; // set this explicitly
 
     }
+
 }
 
 /**

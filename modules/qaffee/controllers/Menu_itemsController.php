@@ -22,18 +22,21 @@ class Menu_itemsController extends DashboardController
         ];
     public function actionIndex()
     {
-        Yii::$app->user->can('qaffee-menu-items-list');
+        // Yii::$app->user->can('qaffee-menu-items-list');
         $searchModel = new Menu_itemsSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+               return $this->renderFile(
+    Yii::getAlias('@app/providers/interface/views/qaffee/menu_items/index.php'),
+    [
+        'searchModel' => $searchModel,
+        'dataProvider' => $dataProvider,
+    ]
+);
     }
     public function actionCreate()
     {
-        Yii::$app->user->can('qaffee-menu-items-create');
+        // Yii::$app->user->can('qaffee-menu-items-create');
         $model = new Menu_items();
         if ($this->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
@@ -47,13 +50,14 @@ class Menu_itemsController extends DashboardController
         } else {
             $model->loadDefaultValues();
         }
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+       return $this->renderFile(
+        Yii::getAlias('@app/providers/interface/views/qaffee/menu_items/update.php'),
+        ['model' => $model]
+    );
     }
     public function actionUpdate($id)
     {
-        Yii::$app->user->can('qaffee-menu-items-update');
+        // Yii::$app->user->can('qaffee-menu-items-update');
         $model = $this->findModel($id);
 
         if ($this->request->isPost) {
@@ -66,19 +70,20 @@ class Menu_itemsController extends DashboardController
                 }
             }
         }
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        return $this->renderFile(
+        Yii::getAlias('@app/providers/interface/views/qaffee/menu_items/update.php'),
+        ['model' => $model]
+    );
     }
     public function actionTrash($id)
     {
         $model = $this->findModel($id);
         if ($model->is_deleted) {
-            Yii::$app->user->can('qaffee-menu-items-restore');
+            // Yii::$app->user->can('qaffee-menu-items-restore');
             $model->restore();
             Yii::$app->session->setFlash('success', 'Menu_items has been restored');
         } else {
-            Yii::$app->user->can('qaffee-menu-items-delete');
+            // Yii::$app->user->can('qaffee-menu-items-delete');
             $model->delete();
             Yii::$app->session->setFlash('success', 'Menu_items has been deleted');
         }

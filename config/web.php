@@ -9,8 +9,20 @@ $config = [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'main\controllers',
     'timeZone' => 'Africa/Nairobi',
-    'aliases' =>  $wrapper->load('aliases'),
-    'modules' => $wrapper->load('modules'),
+ 'aliases' => array_merge(
+    $wrapper->load('aliases'),
+    [
+        '@bower'      => '@vendor/bower-asset',
+        '@npm'        => '@vendor/npm-asset',
+        '@components' => '@app/views/components',
+    ]
+),
+
+    'modules' => [
+    'crm' => [
+        'class' => 'crm\Module',
+    ],
+],
     'runtimePath' => dirname(__DIR__) . '/providers/bin',
     'components' => [
         'assetManager' => [

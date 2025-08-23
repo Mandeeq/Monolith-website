@@ -4,7 +4,7 @@
 /** @var string $content */
 
 use yii\helpers\Html;
-use ui\bundles\MainAsset;
+use app\web\bundles\MainAsset;
 
 MainAsset::register($this);
 ?>

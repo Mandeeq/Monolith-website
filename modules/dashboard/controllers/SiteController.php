@@ -37,6 +37,7 @@ class SiteController extends \helpers\DashboardController
         //Yii::$app->session->setFlash('success', 'Link created successfully');
         return $this->render('index');
     }
+    
     public function actionDocs($mod = 'dashboard')
     {
         //$this->viewPath = '@swagger';

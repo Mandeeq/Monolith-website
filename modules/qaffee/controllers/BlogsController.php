@@ -22,18 +22,21 @@ class BlogsController extends DashboardController
         ];
     public function actionIndex()
     {
-        Yii::$app->user->can('qaffee-blogs-list');
+        // Yii::$app->user->can('qaffee-blogs-list');
         $searchModel = new BlogsSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+               return $this->renderFile(
+    Yii::getAlias('@app/providers/interface/views/qaffee/blogs/index.php'),
+    [
+        'searchModel' => $searchModel,
+        'dataProvider' => $dataProvider,
+    ]
+);
     }
     public function actionCreate()
     {
-        Yii::$app->user->can('qaffee-blogs-create');
+        // Yii::$app->user->can('qaffee-blogs-create');
         $model = new Blogs();
         if ($this->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
@@ -47,13 +50,14 @@ class BlogsController extends DashboardController
         } else {
             $model->loadDefaultValues();
         }
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        return $this->renderFile(
+        Yii::getAlias('@app/providers/interface/views/qaffee/blogs/create.php'),
+        ['model' => $model]
+    );
     }
     public function actionUpdate($id)
     {
-        Yii::$app->user->can('qaffee-blogs-update');
+        // Yii::$app->user->can('qaffee-blogs-update');
         $model = $this->findModel($id);
 
         if ($this->request->isPost) {
@@ -66,19 +70,20 @@ class BlogsController extends DashboardController
                 }
             }
         }
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        return $this->renderFile(
+        Yii::getAlias('@app/providers/interface/views/qaffee/blogs/update.php'),
+        ['model' => $model]
+    );
     }
     public function actionTrash($id)
     {
         $model = $this->findModel($id);
         if ($model->is_deleted) {
-            Yii::$app->user->can('qaffee-blogs-restore');
+            // Yii::$app->user->can('qaffee-blogs-restore');
             $model->restore();
             Yii::$app->session->setFlash('success', 'Blogs has been restored');
         } else {
-            Yii::$app->user->can('qaffee-blogs-delete');
+            // Yii::$app->user->can('qaffee-blogs-delete');
             $model->delete();
             Yii::$app->session->setFlash('success', 'Blogs has been deleted');
         }

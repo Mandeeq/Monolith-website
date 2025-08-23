@@ -4,7 +4,7 @@
 /** @var string $content */
 
 use yii\helpers\Html;
-use ui\bundles\MainAsset;
+use app\web\bundles\MainAsset;
 
 MainAsset::register($this);
 ?>
@@ -24,6 +24,7 @@ MainAsset::register($this);
     <?php $this->beginBody() ?>
     <div id="page-container" class="main-wrapper">
         <?= $this->render('sections/admin/_header.php') ?>
+        
         <?= $this->render('sections/admin/_sideBar') ?>
         <div id="main-container" class="page-wrapper">
             <div class="content container-fluid">
