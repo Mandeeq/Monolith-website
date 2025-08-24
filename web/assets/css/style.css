@@ -2362,7 +2362,7 @@ ul {
 .banner_part {
   height: 1080px;
   position: relative;
-  background-image: url(/e-comerce/e-commerce-app/web/img/banner_bg.png);
+  background-image: url(/e-comerce/e-commerce-app/web/assets/img/banner_bg.png);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -2667,7 +2667,7 @@ ul {
 /**************** intro_video css start ****************/
 /* line 2, /Applications/MAMP/htdocs/palash/cl/july 2019/july/194 Restaurant/194 Restaurant html/sass/_intro_video_bg.scss */
 .intro_video_bg {
-  background-image: url("/e-comerce/e-commerce-app/web/img/intro_video_bg.png");
+  background-image: url("/e-comerce/e-commerce-app/web/assets/img/intro_video_bg.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -2980,7 +2980,7 @@ ul {
 /*********** contact part css start ***********/
 /* line 2, /Applications/MAMP/htdocs/palash/cl/july 2019/july/194 Restaurant/194 Restaurant html/sass/_contact_part.scss */
 .contact_part {
-  background-image: url("/e-comerce/e-commerce-app/web/img/contact_bg.png");
+  background-image: url("/e-comerce/e-commerce-app/web/assets/img/contact_bg.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

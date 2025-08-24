@@ -21,7 +21,7 @@
                     very behold.
                   </p>
                   <div class="client_review_img">
-                    <img src="img/client/client_1.png" alt="#" />
+                    <img src="/e-comerce/e-commerce-app/web/assets/img/client/client_1.png" alt="#" />
                     <h4>Mosan Cameron</h4>
                     <div class="review_icon">
                       <i class="fas fa-star"></i>
@@ -41,7 +41,7 @@
                     very behold.
                   </p>
                   <div class="client_review_img">
-                    <img src="img/client/client_2.png" alt="#" />
+                    <img src="/e-comerce/e-commerce-app/web/assets/img/client/client_2.png" alt="#" />
                     <h4>Mosan Cameron</h4>
                     <div class="review_icon">
                       <i class="fas fa-star"></i>
@@ -61,7 +61,7 @@
                     very behold.
                   </p>
                   <div class="client_review_img">
-                    <img src="img/client/client_3.png" alt="#" />
+                    <img src="/e-comerce/e-commerce-app/web/assets/img/client/client_3.png" alt="#" />
                     <h4>Mosan Cameron</h4>
                     <div class="review_icon">
                       <i class="fas fa-star"></i>
@@ -81,7 +81,7 @@
                     very behold.
                   </p>
                   <div class="client_review_img">
-                    <img src="img/client/client_1.png" alt="#" />
+                    <img src="/e-comerce/e-commerce-app/web/assets/img/client/client_1.png" alt="#" />
                     <h4>Mosan Cameron</h4>
                     <div class="review_icon">
                       <i class="fas fa-star"></i>
@@ -101,7 +101,7 @@
                     very behold.
                   </p>
                   <div class="client_review_img">
-                    <img src="img/client/client_2.png" alt="#" />
+                    <img src="/e-comerce/e-commerce-app/web/assets/img/client/client_2.png" alt="#" />
                     <h4>Mosan Cameron</h4>
                     <div class="review_icon">
                       <i class="fas fa-star"></i>
@@ -121,7 +121,7 @@
                     very behold.
                   </p>
                   <div class="client_review_img">
-                    <img src="img/client/client_3.png" alt="#" />
+                    <img src="/e-comerce/e-commerce-app/web/assets/img/client/client_3.png" alt="#" />
                     <h4>Mosan Cameron</h4>
                     <div class="review_icon">
                       <i class="fas fa-star"></i>

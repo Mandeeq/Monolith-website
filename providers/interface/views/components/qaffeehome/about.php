@@ -24,7 +24,7 @@
                 </div>
                 <div class="col-lg-5">
                   <div class="about_img">
-                    <img src="img/about.png" alt="" />
+                    <img src="/e-comerce/e-commerce-app/web/assets/img/about.png" alt="" />
                   </div>
                 </div>
               </div>

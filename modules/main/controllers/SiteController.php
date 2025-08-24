@@ -43,6 +43,28 @@ class SiteController extends \helpers\WebController
         //Yii::$app->session->setFlash('success', 'Link created successfully');
         return $this->render('index');
     }
+    public function actionAbout()
+    {
+        //Yii::$app->session->setFlash('success', 'Link created successfully');
+        return $this->render('about');
+    }
+
+     public function actionMenu()
+    {
+        //Yii::$app->session->setFlash('success', 'Link created successfully');
+        return $this->render('menu');
+    }
+      public function actionBlog()
+    {
+        //Yii::$app->session->setFlash('success', 'Link created successfully');
+        return $this->render('blog');
+    }
+     public function actionContact()
+    {
+        //Yii::$app->session->setFlash('success', 'Link created successfully');
+        return $this->render('contact');
+    }
+ 
     public function actionDocs($mod = 'dashboard')
     {
         //$this->viewPath = '@swagger';
@@ -50,17 +72,7 @@ class SiteController extends \helpers\WebController
             'mod' => $mod
         ]);
     }
-    public function actionAbout()
-    {
-        return [
-            'data' => [
-                'id' => $_SERVER['APP_CODE'],
-                'name' => $_SERVER['APP_NAME'],
-                'enviroment' => $_SERVER['ENVIRONMENT'],
-                'version' => $_SERVER['APP_VERSION'],
-            ]
-        ];
-    }
+  
 
     public function actionJsonDocs($mod = 'dashboard')
     {

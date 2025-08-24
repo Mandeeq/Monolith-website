@@ -10,7 +10,12 @@ $basePath = \yii::$app->request->baseUrl . '/providers/interface/assets/admin/';
             <div class="col-lg-12">
                 <nav class="navbar navbar-expand-lg navbar-light">
                     <a class="navbar-brand" href="<?= Url::to(['/site/index']) ?>">
-                        <img src="<?= $basePath ?>assets/img/logo.png" alt="Logo" class="img-fluid" />
+ <img src="/e-comerce/e-commerce-app/web/assets/img/logo.jpeg"  style=" border-radius: 50%; /* Makes the logo fully round */
+  width: 80px;        /* Adjust the width to make it smaller */
+  height: 80px;       /* Adjust height to keep it proportional */
+  object-fit: cover;  /* Ensures image fits within the rounded shape */"  alt="logo" />
+
+
                     </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,30 +23,24 @@ $basePath = \yii::$app->request->baseUrl . '/providers/interface/assets/admin/';
                     </button>
 
                     <div class="collapse navbar-collapse main-menu-item justify-content-end" id="navbarSupportedContent">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link" href="<?= Url::to(['/home-sections/index']) ?>">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="<?= Url::to(['/site/about']) ?>">About</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="<?= Url::to(['/menu/index']) ?>">Menu</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="<?= Url::to(['/blog/index']) ?>" id="navbarDropdown"
-                                    role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Blog
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="<?= Url::to(['/blog/index']) ?>">Blog</a>
-                                    <a class="dropdown-item" href="<?= Url::to(['/blog/view', 'id' => 1]) ?>">Single blog</a>
-                                </div>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="<?= Url::to(['/contact/index']) ?>">Contact</a>
-                            </li>
-                        </ul>
+                       <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="<?= Url::to(['site/index']) ?>">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="<?= Url::to(['site/about']) ?>">About</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="<?= Url::to(['site/menu']) ?>">Menu</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="<?= Url::to(['site/blog']) ?>">Blogs</a>
+                  </li>
+             
+                  <li class="nav-item">
+                   <a class="nav-link" href="<?= Url::to(['site/contact']) ?>">Contact</a>
+                  </li>
+                </ul>
                     </div>
 
                     <div class="social_icon d-none d-lg-block">

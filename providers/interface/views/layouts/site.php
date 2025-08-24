@@ -24,7 +24,7 @@ MainAsset::register($this);
     <?php $this->beginBody() ?>
     <?= $this->render('sections/header') ?>
     <?= $content ?>
-    <?= $this->render('sections/footer') ?>
+    <?= $this->render('sections/_footer') ?>
 
     <?php $this->endBody() ?>
 </body>

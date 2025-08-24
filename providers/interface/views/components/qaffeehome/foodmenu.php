@@ -15,7 +15,7 @@
                 <div class="col-sm-6 col-lg-6">
                   <div class="single_food_item media">
                     <img
-                      src="img/food_menu/single_food_1.png"
+                      src="/e-comerce/e-commerce-app/web/assets/img/food_menu/single_food_1.png"
                       class="img-responsive"
                       alt="..."
                     />
@@ -27,7 +27,7 @@
                   </div>
                   <div class="single_food_item media">
                     <img
-                      src="img/food_menu/single_food_2.png"
+                      src="/e-comerce/e-commerce-app/web/assets/img/food_menu/single_food_2.png"
                       class="img-responsive"
                       alt="..."
                     />
@@ -39,7 +39,7 @@
                   </div>
                   <div class="single_food_item media">
                     <img
-                      src="img/food_menu/single_food_3.png"
+                      src="/e-comerce/e-commerce-app/web/assets/img/food_menu/single_food_3.png"
                       class="img-responsive"
                       alt="..."
                     />
@@ -53,7 +53,7 @@
                 <div class="col-sm-6 col-lg-6">
                   <div class="single_food_item media">
                     <img
-                      src="img/food_menu/single_food_4.png"
+                      src="/e-comerce/e-commerce-app/web/assets/img/food_menu/single_food_4.png"
                       class="img-responsive"
                       alt="..."
                     />
@@ -65,7 +65,7 @@
                   </div>
                   <div class="single_food_item media">
                     <img
-                      src="img/food_menu/single_food_5.png"
+                      src="/e-comerce/e-commerce-app/web/assets/img/food_menu/single_food_5.png"
                       class="img-responsive"
                       alt="..."
                     />
@@ -77,7 +77,7 @@
                   </div>
                   <div class="single_food_item media">
                     <img
-                      src="img/food_menu/single_food_6.png"
+                      src="/e-comerce/e-commerce-app/web/assets/img/food_menu/single_food_6.png"
                       class="img-responsive"
                       alt="..."
                     />
