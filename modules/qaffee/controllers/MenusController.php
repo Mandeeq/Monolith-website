@@ -36,80 +36,61 @@ class MenusController extends DashboardController
         ]);
     }
 
-    public function actionCreate()
-    {
-        Yii::$app->user->can('qaffee-menus-create');
-        $model = new FoodMenus();
-        
-        if ($this->request->isPost) {
-            // Correct order: Get the file instance FIRST
+ public function actionCreate()
+{
+    Yii::$app->user->can('qaffee-menus-create');
+    $model = new FoodMenus();
+    
+    if ($this->request->isPost) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            // Correct order: Get the file instance AFTER loading the model
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-
-            if ($model->load(Yii::$app->request->post())) {
-                if ($model->validate()) {
-                    // Check if an image was uploaded and upload it
-                    if ($model->imageFile && !$model->uploadImage()) {
-                        Yii::$app->session->setFlash('error', 'Failed to upload image.');
-                        return $this->render('create', ['model' => $model]);
-                    }
-                    
-                    if ($model->save()) {
-                        Yii::$app->session->setFlash('success', 'FoodMenus created successfully');
-                        return $this->redirect(['index']);
-                    } else {
-                        Yii::$app->session->setFlash('error', 'Failed to save model.');
-                    }
-                }
+            
+            if ($model->imageFile && !$model->uploadImage()) {
+                Yii::$app->session->setFlash('error', 'Failed to upload image.');
+                return $this->render('create', ['model' => $model]);
             }
-        } else {
-            $model->loadDefaultValues();
+            
+            if ($model->save(false)) {
+                Yii::$app->session->setFlash('success', 'FoodMenus created successfully');
+                return $this->redirect(['index']);
+            }
         }
-        
-        if ($this->request->isAjax) {
-            return $this->renderAjax('create', ['model' => $model]);
-        } else {
-            return $this->render('create', ['model' => $model]);
-        }
+    } else {
+        $model->loadDefaultValues();
     }
     
+    if ($this->request->isAjax) {
+        return $this->renderAjax('create', ['model' => $model]);
+    } else {
+        return $this->render('create', ['model' => $model]);
+    }
+} 
     public function actionUpdate($id)
     {
         Yii::$app->user->can('qaffee-menus-update');
         $model = $this->findModel($id);
-        $oldImage = $model->image;
-
+        
         if ($this->request->isPost) {
-            // Correct order: Get the file instance FIRST
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
             
-            if ($model->load(Yii::$app->request->post())) {
-                if ($model->validate()) {
-                    // Check if a new image was uploaded
-                    if ($model->imageFile) {
-                        // Delete old image if it exists and a new one is uploaded
-                        if ($oldImage && file_exists(Yii::getAlias('@webroot') . $oldImage)) {
-                            unlink(Yii::getAlias('@webroot') . $oldImage);
-                        }
-                        if (!$model->uploadImage()) {
-                            Yii::$app->session->setFlash('error', 'Failed to upload new image.');
-                            return $this->render('update', ['model' => $model]);
-                        }
-                    } else {
-                        // No new image uploaded, keep the old path
-                        $model->image = $oldImage;
+            if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+                if ($model->imageFile) {
+                    // This function will automatically handle old image deletion
+                    if (!$model->uploadImage()) {
+                        Yii::$app->session->setFlash('error', 'Failed to upload new image.');
+                        return $this->render('update', ['model' => $model]);
                     }
-
-                    if ($model->save()) {
-                        Yii::$app->session->setFlash('success', 'FoodMenus updated successfully');
-                        return $this->redirect(['index']);
-                    } else {
-                        Yii::$app->session->setFlash('error', 'Failed to save model.');
-                    }
+                }
+                
+                if ($model->save(false)) {
+                    Yii::$app->session->setFlash('success', 'FoodMenus updated successfully');
+                    return $this->redirect(['index']);
                 }
             }
         }
         
-        if ($this->request->isAjax) {
+        if (Yii::$app->request->isAjax) {
             return $this->renderAjax('update', ['model' => $model]);
         } else {
             return $this->render('update', ['model' => $model]);

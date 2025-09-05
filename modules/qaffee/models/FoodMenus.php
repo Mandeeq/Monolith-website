@@ -1,9 +1,9 @@
 <?php
 
 namespace qaffee\models;
-use yii\web\UploadedFile;
-use yii\helpers\FileHelper;
+
 use Yii;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "food_menus".
@@ -23,19 +23,13 @@ use Yii;
  */
 class FoodMenus extends \yii\db\ActiveRecord
 {
+    public $imageFile;
 
- public $imageFile;
-    /**
-     * {@inheritdoc}
-     */
     public static function tableName()
     {
         return 'food_menus';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
@@ -48,14 +42,10 @@ class FoodMenus extends \yii\db\ActiveRecord
             [['category_id', 'is_available', 'display_order', 'created_at', 'updated_at'], 'integer'],
             [['name', 'image'], 'string', 'max' => 255],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => MenuCategories::class, 'targetAttribute' => ['category_id' => 'id']],
-               [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg'],
-            [['image'], 'string', 'max' => 255], 
+            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg', 'maxSize' => 1024 * 1024 * 2],
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function attributeLabels()
     {
         return [
@@ -69,108 +59,80 @@ class FoodMenus extends \yii\db\ActiveRecord
             'display_order' => 'Display Order',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
-             'imageFile' => 'Upload Image'
+            'imageFile' => 'Upload Image'
         ];
     }
 
-    /**
-     * Gets query for [[Category]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
     public function getCategory()
     {
         return $this->hasOne(MenuCategories::class, ['id' => 'category_id']);
     }
 
-public function uploadImage()
+  public function uploadImage()
 {
+    Yii::error('Starting uploadImage() function.', 'upload-debug');
+
     if ($this->imageFile === null) {
-        return true; // No file to upload, nothing to do
+        Yii::error('Image file is null. Returning true.', 'upload-debug');
+        return true;
     }
 
-    $uploadDir = Yii::getAlias('@webroot/uploads/menus/');
+    $uploadPath = Yii::getAlias('@webroot/uploads/menus/');
     $relativeDir = '/uploads/menus/';
-    Yii::error('Upload dir: ' . $uploadDir);
+    // Log 2: Check the resolved directory path
+    Yii::error('Resolved path: ' . $uploadPath, 'upload-debug');
 
-    // Check if the directory exists and create it if not
-    if (!is_dir($uploadDir)) {
-        try {
-            FileHelper::createDirectory($uploadDir, 0775, true);
-            // Set permissions after creation (in case umask interferes)
-            chmod($uploadDir, 0775);
-        } catch (\yii\base\Exception $e) {
-            Yii::error('Failed to create upload directory: ' . $e->getMessage());
+    if (!is_dir($uploadPath)) {
+        Yii::error('Directory does not exist. Attempting to create.', 'upload-debug');
+        if (!mkdir($uploadPath, 0775, true) && !is_dir($uploadPath)) {
+            // Log 3: Check if the folder creation failed
+            Yii::error('Directory creation failed!', 'upload-debug');
             return false;
         }
+        Yii::error('Directory created successfully.', 'upload-debug');
+    }
+    
+    $fileName = Yii::$app->security->generateRandomString() . '.' . $this->imageFile->extension;
+    $filePath = $uploadPath . $fileName;
+
+    if ($this->imageFile->saveAs($filePath)) {
+        $this->image = $relativeDir . $fileName;
+        // Log 4: Confirm file save success
+        Yii::error('File saved successfully to: ' . $filePath, 'upload-debug');
+        return true;
     }
 
-    // Generate a unique filename to prevent overwrites
-    $fileName = Yii::$app->security->generateRandomString() . '.' . $this->imageFile->extension;
-    $filePath = $uploadDir . $fileName;
-
-    // Save the uploaded file to the new path
-    if ($this->imageFile->saveAs($filePath)) {
-        // Optionally set file permissions
-        chmod($filePath, 0664);
-        $this->image = $relativeDir . $fileName;
-        Yii::error('Image uploaded successfully: ' . $filePath);
-        return true;
-    } else {
-        Yii::error('Failed to save uploaded image file.');
+    // Log 5: Check if the final save failed
+    Yii::error('File saveAs() method returned false.', 'upload-debug');
+    return false;
+}
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            if ($insert) {
+                $this->created_at = time();
+            }
+            $this->updated_at = time();
+            
+            if (!$insert && $this->isAttributeChanged('image')) {
+                $this->deleteOldImage();
+            }
+            return true;
+        }
         return false;
     }
-}
-//      public function uploadImage()
-//     {
-//         // if ($this->validate()) {
-//         //     if ($this->imageFile) {
-//         //         $fileName = Yii::$app->security->generateRandomString() . '.' . $this->imageFile->extension;
-//         //         $filePath = Yii::getAlias('@webroot/uploads/menus/') . $fileName;
-                
-//         //         if ($this->imageFile->saveAs($filePath)) {
-//         //             $this->image = '/uploads/menus/' . $fileName;
-//         //             return true;
-//         //         }
-//         //     }
-//         // }
-//         // return false;
-//          // Check if an image file was provided
-//         if ($this->imageFile === null) {
-//             return true; // No file to upload, nothing to do
-//         }
-
-//         // Define the upload path
-//         $uploadDir = Yii::getAlias('@webroot/uploads/menus/');
-//         $relativeDir = '/uploads/menus/';
-//          Yii::error('Upload dir: ' . $uploadDir);
-//         // Check if the directory exists and create it if not
-//         if (!is_dir($uploadDir)) {
-//             try {
-//                 FileHelper::createDirectory($uploadDir);
-//             } catch (\yii\base\Exception $e) {
-//                 // Log the error and return false if directory creation fails
-//                 Yii::error('Failed to create upload directory: ' . $e->getMessage());
-//                 return false;
-//             }
-//         }
-
-//         // Generate a unique filename to prevent overwrites
-//         $fileName = Yii::$app->security->generateRandomString() . '.' . $this->imageFile->extension;
-//         $filePath = $uploadDir . $fileName;
-
-//         // Save the uploaded file to the new path
-//         if ($this->imageFile->saveAs($filePath)) {
-//             // Update the model's 'image' attribute with the relative path
-//             $this->image = $relativeDir . $fileName;
-//             return true;
-//         } else {
-//             // Log the error if the file could not be saved
-//             Yii::error('Failed to save uploaded image file.');
-//             return false;
-//         }
     
-// }
+    public function afterDelete()
+    {
+        parent::afterDelete();
+        $this->deleteOldImage();
+    }
 
-
+    protected function deleteOldImage()
+    {
+        $imagePath = $this->getOldAttribute('image');
+        if ($imagePath && file_exists(Yii::getAlias('@webroot') . $imagePath)) {
+            unlink(Yii::getAlias('@webroot') . $imagePath);
+        }
+    }
 }

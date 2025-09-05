@@ -12,7 +12,9 @@ use qaffee\models\MenuCategories;
 
 <div class="food-menus-form">
 
-    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+    <?php $form = ActiveForm::begin(['options' =>
+     ['enctype' => 'multipart/form-data',
+       'data-pjax' => true]]); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 

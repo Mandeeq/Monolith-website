@@ -1,4 +1,5 @@
 <?php
+use yii\helpers\Html;
 ?>
   <section class="review_part section_padding">
       <div class="container">
@@ -21,7 +22,8 @@
                     very behold.
                   </p>
                   <div class="client_review_img">
-                    <img src="/e-comerce/e-commerce-app/web/assets/img/client/client_1.png" alt="#" />
+                    <?= Html::img('@web/web/assets/img/client/client_1.png', ['alt' => 'Client Image'])?>
+                   
                     <h4>Mosan Cameron</h4>
                     <div class="review_icon">
                       <i class="fas fa-star"></i>
@@ -41,7 +43,8 @@
                     very behold.
                   </p>
                   <div class="client_review_img">
-                    <img src="/e-comerce/e-commerce-app/web/assets/img/client/client_2.png" alt="#" />
+                    <?= Html::img('@web/web/assets/img/client/client_2.png', ['alt' => 'Client Image'])?>
+               
                     <h4>Mosan Cameron</h4>
                     <div class="review_icon">
                       <i class="fas fa-star"></i>
@@ -61,7 +64,8 @@
                     very behold.
                   </p>
                   <div class="client_review_img">
-                    <img src="/e-comerce/e-commerce-app/web/assets/img/client/client_3.png" alt="#" />
+                    <?= Html::img('@web/web/assets/img/client/client_3.png', ['alt' => 'Client Image'])?>
+               
                     <h4>Mosan Cameron</h4>
                     <div class="review_icon">
                       <i class="fas fa-star"></i>

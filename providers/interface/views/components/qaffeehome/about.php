@@ -1,4 +1,5 @@
 <?php
+use yii\helpers\Html;
 ?>
   <section class="about_part">
       <div class="container">
@@ -24,7 +25,8 @@
                 </div>
                 <div class="col-lg-5">
                   <div class="about_img">
-                    <img src="/e-comerce/e-commerce-app/web/assets/img/about.png" alt="" />
+                 <?= Html::img('@web/web/assets/img/about.png', ['alt' => 'About Image'])?>
+                  
                   </div>
                 </div>
               </div>
