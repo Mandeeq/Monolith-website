@@ -9,9 +9,6 @@ use helpers\DashboardController;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 
-/**
- * MenusController implements the CRUD actions for FoodMenus model.
- */
 class MenusController extends DashboardController
 {
     public $permissions = [
@@ -67,35 +64,34 @@ class MenusController extends DashboardController
     }
 } 
     public function actionUpdate($id)
-    {
-        Yii::$app->user->can('qaffee-menus-update');
-        $model = $this->findModel($id);
-        
-        if ($this->request->isPost) {
+{
+    Yii::$app->user->can('qaffee-menus-update');
+    $model = $this->findModel($id);
+    
+    if ($this->request->isPost) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
             
-            if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-                if ($model->imageFile) {
-                    // This function will automatically handle old image deletion
-                    if (!$model->uploadImage()) {
-                        Yii::$app->session->setFlash('error', 'Failed to upload new image.');
-                        return $this->render('update', ['model' => $model]);
-                    }
-                }
-                
-                if ($model->save(false)) {
-                    Yii::$app->session->setFlash('success', 'FoodMenus updated successfully');
-                    return $this->redirect(['index']);
+            if ($model->imageFile) {
+                if (!$model->uploadImage()) {
+                    Yii::$app->session->setFlash('error', 'Failed to upload new image.');
+                    return $this->render('update', ['model' => $model]);
                 }
             }
-        }
-        
-        if (Yii::$app->request->isAjax) {
-            return $this->renderAjax('update', ['model' => $model]);
-        } else {
-            return $this->render('update', ['model' => $model]);
+            
+            if ($model->save(false)) {
+                Yii::$app->session->setFlash('success', 'FoodMenus updated successfully');
+                return $this->redirect(['index']);
+            }
         }
     }
+    
+    if ($this->request->isAjax) {
+        return $this->renderAjax('update', ['model' => $model]);
+    } else {
+        return $this->render('update', ['model' => $model]);
+    }
+}
 
     public function actionTrash($id)
     {

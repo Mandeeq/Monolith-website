@@ -70,26 +70,18 @@ class FoodMenus extends \yii\db\ActiveRecord
 
   public function uploadImage()
 {
-    Yii::error('Starting uploadImage() function.', 'upload-debug');
-
     if ($this->imageFile === null) {
-        Yii::error('Image file is null. Returning true.', 'upload-debug');
         return true;
     }
 
     $uploadPath = Yii::getAlias('@webroot/uploads/menus/');
     $relativeDir = '/uploads/menus/';
-    // Log 2: Check the resolved directory path
-    Yii::error('Resolved path: ' . $uploadPath, 'upload-debug');
+
 
     if (!is_dir($uploadPath)) {
-        Yii::error('Directory does not exist. Attempting to create.', 'upload-debug');
         if (!mkdir($uploadPath, 0775, true) && !is_dir($uploadPath)) {
-            // Log 3: Check if the folder creation failed
-            Yii::error('Directory creation failed!', 'upload-debug');
             return false;
         }
-        Yii::error('Directory created successfully.', 'upload-debug');
     }
     
     $fileName = Yii::$app->security->generateRandomString() . '.' . $this->imageFile->extension;
@@ -97,13 +89,8 @@ class FoodMenus extends \yii\db\ActiveRecord
 
     if ($this->imageFile->saveAs($filePath)) {
         $this->image = $relativeDir . $fileName;
-        // Log 4: Confirm file save success
-        Yii::error('File saved successfully to: ' . $filePath, 'upload-debug');
         return true;
     }
-
-    // Log 5: Check if the final save failed
-    Yii::error('File saveAs() method returned false.', 'upload-debug');
     return false;
 }
     public function beforeSave($insert)

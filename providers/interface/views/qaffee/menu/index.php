@@ -21,13 +21,18 @@ $this->params['breadcrumbs'][] = $this->title;
           <?=  Html::customButton([
             'type' => 'modal',
             'url' => Url::to(['create']),
+            
             'appearence' => [
               'type' => 'text',
               'text' => 'Create Food Menus',
               'theme' => 'primary',
+              'size' => 'sm',
               'visible' => Yii::$app->user->can('qaffee-menus-create', true)
             ],
-            'modal' => ['title' => 'New Food Menus']
+            'modal' => [
+              'title' => 'New Food Menus',
+              'size' => 'lg'
+              ]
           ]) ?>
           </div> 
         </div>
@@ -59,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'contentOptions' => ['style'=>'text-align: center;'],
                  'buttons' => [
                     'update' => function ($url, $model, $key) {
-                        return Html::customButton(['type' => 'modal', 'url' => Url::toRoute(['update', 'id' => $model->id]), 'modal' => ['title' => 'Update  Food Menus'], 'appearence' => ['icon' => 'edit', 'theme' => 'info']]);
+                        return Html::customButton(['type' => 'modal', 'url' => Url::toRoute(['update', 'id' => $model->id]), 'modal' => ['title' => 'Update  Food Menus', 'size'=> 'lg'], 'appearence' => ['icon' => 'edit', 'theme' => 'info']]);
                     },
                     'trash' => function ($url, $model, $key) {
                         return $model->is_deleted !== 1 ?
