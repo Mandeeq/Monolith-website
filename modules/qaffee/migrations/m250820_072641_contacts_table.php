@@ -16,6 +16,7 @@ class m250820_072641_contacts_table extends Migration
             'subject' => $this->string(),
             'message' => $this->text()->notNull(),
             'created_at' => $this->integer()->notNull(),
+                'is_deleted' => $this->integer()->defaultValue(0),
         ]);
     }
 

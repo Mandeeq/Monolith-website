@@ -15,6 +15,7 @@ class m250820_072608_about_us_table extends Migration
             'content' => $this->text(),
             'image' => $this->string(),
             'order' => $this->integer()->defaultValue(0),
+                'is_deleted' => $this->integer()->defaultValue(0),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
         ]);

@@ -11,9 +11,10 @@ use yii\helpers\Html;
                 'alt' => 'RentalMS ',
                 'class' => 'img-fluid',
                 'style' => '
-            max-height: 50%;
-             margin-right: 10px;
-            max-width: 50%;
+            max-height: 80px;
+             margin-right: 5px;
+             margin-top: 30px;
+            max-width: 80px;
             border-radius: 50%;
             padding-bottom: -50px;
              
@@ -27,7 +28,7 @@ use yii\helpers\Html;
             <span class="smini-visible">
                 <i class="fa fa-circle-notch text-primary"></i>
             </span>
-            <span class="smini-hide fs-1 tracking-wider"><?= Yii::$app->name ?></span>
+          
         </a>
         <!-- Logo -->
         <!-- <a class="fw-semibold text-dual" href="/">

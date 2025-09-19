@@ -1,18 +1,18 @@
 <?php
 
-use qaffee\models\AboutSections;
+use qaffee\models\Banners;
 use helpers\Html;
 use yii\helpers\Url;
 use helpers\grid\GridView;
 
 /** @var yii\web\View $this */
-/** @var qaffee\models\searches\AboutSectionsSearch $searchModel */
+/** @var qaffee\models\searches\BannersSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'About Sections';
+$this->title = 'Banners';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="about-sections-index row">
+<div class="banners-index row">
     <div class="col-md-12">
       <div class="block block-rounded">
         <div class="block-header block-header-default">
@@ -23,16 +23,16 @@ $this->params['breadcrumbs'][] = $this->title;
             'url' => Url::to(['create']),
             'appearence' => [
               'type' => 'text',
-              'text' => 'Create About Sections',
+              'text' => 'Create Banners',
               'theme' => 'primary',
-              'visible' => Yii::$app->user->can('qaffee-about-sections-create', true)
+              'visible' => Yii::$app->user->can('qaffee-banners-create', true)
             ],
-            'modal' => ['title' => 'New About Sections', 'size' => 'lg']
+            'modal' => ['title' => 'New Banners', 'size' => 'lg']
           ]) ?>
           </div> 
         </div>
         <div class="block-content">     
-    <div class="about-sections-search my-3">
+    <div class="banners-search my-3">
     <?= $this->render('_search', ['model' => $searchModel]); ?>
     </div>
 
@@ -43,9 +43,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'title',
-            'content:ntext',
             'image',
-            'order',
+            'link',
+            'status:boolean',
+            //'is_deleted',
             //'created_at',
             //'updated_at',
             [
@@ -55,20 +56,20 @@ $this->params['breadcrumbs'][] = $this->title;
                 'contentOptions' => ['style'=>'text-align: center;'],
                  'buttons' => [
                     'update' => function ($url, $model, $key) {
-                        return Html::customButton(['type' => 'modal', 'url' => Url::toRoute(['update', 'id' => $model->id]), 'modal' => ['title' => 'Update  About Sections' , 'size'=>'lg'], 'appearence' => ['icon' => 'edit', 'theme' => 'info']]);
+                        return Html::customButton(['type' => 'modal', 'url' => Url::toRoute(['update', 'id' => $model->id]), 'modal' => ['title' => 'Update  Banners', 'size'=>'lg'], 'appearence' => ['icon' => 'edit', 'theme' => 'info']]);
                     },
                     'trash' => function ($url, $model, $key) {
                         return $model->is_deleted !== 1 ?
-                            Html::customButton(['type' => 'link', 'url' => Url::toRoute(['trash', 'id' => $model->id]),  'appearence' => ['icon' => 'trash', 'theme' => 'danger', 'data' => ['message' => 'Do you want to delete this about sections?']]]) :
-                            Html::customButton(['type' => 'link', 'url' => Url::toRoute(['trash', 'id' => $model->id]),  'appearence' => ['icon' => 'undo', 'theme' => 'warning', 'data' => ['message' => 'Do you want to restore this about sections?']]]);
+                            Html::customButton(['type' => 'link', 'url' => Url::toRoute(['trash', 'id' => $model->id]),  'appearence' => ['icon' => 'trash', 'theme' => 'danger', 'data' => ['message' => 'Do you want to delete this banners?']]]) :
+                            Html::customButton(['type' => 'link', 'url' => Url::toRoute(['trash', 'id' => $model->id]),  'appearence' => ['icon' => 'undo', 'theme' => 'warning', 'data' => ['message' => 'Do you want to restore this banners?']]]);
                     },
                 ],
                 'visibleButtons' => [
-                    'update' => Yii::$app->user->can('qaffee-about-sections-update',true),
+                    'update' => Yii::$app->user->can('qaffee-banners-update',true),
                     'trash' => function ($model){
                          return $model->is_deleted !== 1 ? 
-                                Yii::$app->user->can('qaffee-about-sections-delete',true) : 
-                                Yii::$app->user->can('qaffee-about-sections-restore',true);
+                                Yii::$app->user->can('qaffee-banners-delete',true) : 
+                                Yii::$app->user->can('qaffee-banners-restore',true);
                     },
                 ],
             ],

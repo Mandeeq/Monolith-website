@@ -4,9 +4,13 @@ use helpers\Html;
 use helpers\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var qaffee\models\AboutSections $model */
+/** @var qaffee\models\Banners $model */
 /** @var helpers\widgets\ActiveForm $form */
 
+// Get the base URL for images
+$baseUrl = Yii::$app->request->baseUrl;
+
+// Register CSS
 $css = <<<CSS
 * {
     box-sizing: border-box;
@@ -305,21 +309,32 @@ button {
 CSS;
 
 $this->registerCss($css);
-
 ?>
 
-<div class="about-sections-form">
-    <?php $form = ActiveForm::begin(['options' => ['data-pjax' => true,
-     'enctype' => 'multipart/form-data'
-    ]]);?>
+
+
+
+<div class="banners-form">
+    <?php $form = ActiveForm::begin([
+        'options' => [
+            'data-pjax' => true,
+            'enctype' => 'multipart/form-data', // ✅ needed for file uploads
+        ]
+    ]); ?>
+    
     <div class="row">
         <div class="col-md-12">
-          <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
         </div>
+
+       
+
         <div class="col-md-12">
-          <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
+            <?= $form->field($model, 'content')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="form-section">
+
+
+       <div class="form-section">
             <h2>Menu Image</h2>
             <div class="form-group">
                 <label for="image">Upload Image</label>
@@ -355,11 +370,18 @@ $this->registerCss($css);
                 <?php endif; ?>
             </div>
         </div>
+
         
+
+       
     </div>
+
     <div class="block-content block-content-full text-center">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
+   
+
+      
     <?php ActiveForm::end(); ?>
 </div>
 
@@ -470,4 +492,3 @@ document.getElementById('menu-form').addEventListener('submit', function(e) {
     console.log('Form submitted');
 });
 </script>
-

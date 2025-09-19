@@ -37,12 +37,12 @@ body {
     overflow: hidden;
 }
 
-header {
+/* header {
     background: linear-gradient(135deg, #2c3e50, #4a6491);
     color: white;
     padding: 25px;
     text-align: center;
-}
+} */
 
 header h1 {
     margin-bottom: 10px;
@@ -320,7 +320,8 @@ $this->registerCss($css);
     </header>
     
     <div class="form-container">
-        <?php $form = ActiveForm::begin([
+        <?php $form = ActiveForm::begin(
+            [
             'options' => [
                 'enctype' => 'multipart/form-data',
                 'data-pjax' => true,

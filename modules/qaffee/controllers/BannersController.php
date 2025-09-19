@@ -3,49 +3,53 @@
 namespace qaffee\controllers;
 
 use Yii;
-use qaffee\models\Blogs;
-use qaffee\models\searches\BlogsSearch;
+use qaffee\models\Banners;
+use qaffee\models\searches\BannersSearch;
 use helpers\DashboardController;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 use yii\web\ForbiddenHttpException;
+
 /**
- * BlogsController implements the CRUD actions for Blogs model.
+ * BannersController implements the CRUD actions for Banners model.
  */
-class BlogsController extends DashboardController
+class BannersController extends DashboardController
 {
     public function getViewPath()
     {
-        return Yii::getAlias('@app/providers/interface/views/qaffee/blogs');
+        return Yii::getAlias('@app/providers/interface/views/qaffee/banners');
     }
+
     public $permissions = [
-        'qaffee-blogs-list' => 'View Blogs List',
-        'qaffee-blogs-create' => 'Add Blogs',
-        'qaffee-blogs-update' => 'Edit Blogs',
-        'qaffee-blogs-delete' => 'Delete Blogs',
-        'qaffee-blogs-restore' => 'Restore Blogs',
+        'qaffee-banners-list'   => 'View Banners List',
+        'qaffee-banners-create' => 'Add Banners',
+        'qaffee-banners-update' => 'Edit Banners',
+        'qaffee-banners-delete' => 'Delete Banners',
+        'qaffee-banners-restore'=> 'Restore Banners',
     ];
+
     public function actionIndex()
     {
-        // Yii::$app->user->can('qaffee-blogs-list');
-        $searchModel = new BlogsSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
-
-        return $this->render(
-            'index',
-            [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
-            ]
-        );
-    }
-   public function actionCreate()
-    {
-        if (!Yii::$app->user->can('qaffee-blogs-create')) {
-            throw new ForbiddenHttpException('You are not allowed to create blogs.');
+        if (!Yii::$app->user->can('qaffee-banners-list')) {
+            throw new ForbiddenHttpException('You are not allowed to view this page.');
         }
 
-        $model = new Blogs();
+        $searchModel  = new BannersSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel'  => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionCreate()
+    {
+        if (!Yii::$app->user->can('qaffee-banners-create')) {
+            throw new ForbiddenHttpException('You are not allowed to create banners.');
+        }
+
+        $model = new Banners();
 
         if ($this->request->isPost && $model->load(Yii::$app->request->post())) {
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
@@ -56,7 +60,7 @@ class BlogsController extends DashboardController
             }
 
             if ($model->save(false)) {
-                Yii::$app->session->setFlash('success', 'Blogs created successfully');
+                Yii::$app->session->setFlash('success', 'Banner created successfully');
                 return $this->redirect(['index']);
             }
         } else {
@@ -73,8 +77,8 @@ class BlogsController extends DashboardController
 
     public function actionUpdate($id)
     {
-        if (!Yii::$app->user->can('qaffee-blogs-update')) {
-            throw new ForbiddenHttpException('You are not allowed to update blogs.');
+        if (!Yii::$app->user->can('qaffee-banners-update')) {
+            throw new ForbiddenHttpException('You are not allowed to update banners.');
         }
 
         $model = $this->findModel($id);
@@ -88,7 +92,7 @@ class BlogsController extends DashboardController
             }
 
             if ($model->save()) {
-                Yii::$app->session->setFlash('success', 'blog updated successfully');
+                Yii::$app->session->setFlash('success', 'Banner updated successfully');
                 return $this->redirect(['index']);
             }
         }
@@ -99,26 +103,33 @@ class BlogsController extends DashboardController
 
         }
     }
+
     public function actionTrash($id)
     {
         $model = $this->findModel($id);
+
         if ($model->is_deleted) {
-            // Yii::$app->user->can('qaffee-blogs-restore');
+            if (!Yii::$app->user->can('qaffee-banners-restore')) {
+                throw new ForbiddenHttpException('You are not allowed to restore banners.');
+            }
             $model->restore();
-            Yii::$app->session->setFlash('success', 'Blogs has been restored');
+            Yii::$app->session->setFlash('success', 'Banner has been restored');
         } else {
-            // Yii::$app->user->can('qaffee-blogs-delete');
+            if (!Yii::$app->user->can('qaffee-banners-delete')) {
+                throw new ForbiddenHttpException('You are not allowed to delete banners.');
+            }
             $model->delete();
-            Yii::$app->session->setFlash('success', 'Blogs has been deleted');
-        }
-        return $this->redirect(['index']);
-    }
-    protected function findModel($id)
-    {
-        if (($model = Blogs::findOne(['id' => $id])) !== null) {
-            return $model;
+            Yii::$app->session->setFlash('success', 'Banner has been deleted');
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        return $this->redirect(['index']);
+    }
+
+    protected function findModel($id)
+    {
+        if (($model = Banners::findOne(['id' => $id])) !== null) {
+            return $model;
+        }
+        throw new NotFoundHttpException('The requested banner does not exist.');
     }
 }

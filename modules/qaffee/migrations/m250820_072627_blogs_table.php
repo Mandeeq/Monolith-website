@@ -19,6 +19,7 @@ class m250820_072627_blogs_table extends Migration
             'published_at' => $this->dateTime(),
              'status' => $this->string()->notNull()->defaultValue('draft'), // ✅ FIXED
             'created_at' => $this->integer()->notNull(),
+                'is_deleted' => $this->integer()->defaultValue(0),
             'updated_at' => $this->integer()->notNull(),
         ]);
 

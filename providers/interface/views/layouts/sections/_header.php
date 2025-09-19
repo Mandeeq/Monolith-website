@@ -5,7 +5,7 @@ use yii\helpers\Url;
 ?>
 <header id="page-header">
     <!-- Header Content -->
-    <div class="content-header" style="background-color:#41220e; color: #ffffff;">
+    <div class="content-header" style="background-color:#D5AD86; color: #ffffff;">
         <!-- Left Section -->
         <div class="d-flex align-items-center">
             <!-- Toggle Sidebar -->

@@ -3,24 +3,23 @@
 namespace qaffee\models;
 
 use Yii;
+use yii\web\UploadedFile;
 
 /**
- * This is the model class for table "blogs".
+ * This is the model class for table "banners".
  *
  * @property int $id
  * @property string $title
- * @property string $slug
- * @property string $content
- * @property string|null $image
- * @property int|null $author_id
- * @property string|null $published_at
- * @property string $status
- * @property int $created_at
- * @property int $updated_at
+ * @property string $image
+ * @property string|null $link
+ * @property bool|null $status
+ * @property int|null $is_deleted
+ * @property int|null $created_at
+ * @property int|null $updated_at
  */
-class Blogs extends \yii\db\ActiveRecord
+class Banners extends \yii\db\ActiveRecord
 {
-
+    /** @var UploadedFile */
     public $imageFile;
 
     /**
@@ -28,7 +27,7 @@ class Blogs extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'blogs';
+        return 'banners';
     }
 
     /**
@@ -37,25 +36,30 @@ class Blogs extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['image', 'author_id', 'published_at'], 'default', 'value' => null],
-            [['status'], 'default', 'value' => 'draft'],
-            [['title', 'slug', 'content', 'created_at', 'updated_at'], 'required'],
-            [['content'], 'string'],
-            [['author_id', 'created_at', 'updated_at'], 'default', 'value' => null],
-            [['author_id', 'created_at', 'updated_at'], 'integer'],
-            [['published_at'], 'safe'],
-            [['title', 'slug', 'image', 'status'], 'string', 'max' => 255],
-            [['slug'], 'unique'],
+            [['link', 'created_at', 'updated_at'], 'default', 'value' => null],
+            [['status'], 'default', 'value' => 1],
+            [['is_deleted'], 'default', 'value' => 0],
+
+            // Required fields
+            [['title'], 'required'],
+
+            // DB field types
+            [['status'], 'boolean'],
+            [['is_deleted', 'created_at', 'updated_at'], 'integer'],
+            [['title', 'image', 'link'], 'string', 'max' => 255],
+
+            // Upload validation
+            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg', 'maxSize' => 1024 * 1024 * 2],
         ];
     }
 
-        /**
+    /**
      * Handles file upload and sets $this->image
      */
   public function uploadImage()
 {
     if ($this->imageFile) {
-        $path = Yii::getAlias('@webroot/uploads/blogs/');
+        $path = Yii::getAlias('@webroot/uploads/banners/');
         if (!is_dir($path)) {
             mkdir($path, 0777, true);
         }
@@ -65,7 +69,7 @@ class Blogs extends \yii\db\ActiveRecord
 
         if ($this->imageFile->saveAs($fullPath)) {
             // Save only the relative path/filename in DB
-            $this->image = 'uploads/blogs/' . $fileName;
+            $this->image = 'uploads/banners/' . $fileName;
             return true;
         }
         return false;
@@ -88,6 +92,7 @@ class Blogs extends \yii\db\ActiveRecord
         }
         return false;
     }
+
     /**
      * {@inheritdoc}
      */
@@ -96,15 +101,13 @@ class Blogs extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'title' => 'Title',
-            'slug' => 'Slug',
-            'content' => 'Content',
             'image' => 'Image',
-            'author_id' => 'Author ID',
-            'published_at' => 'Published At',
+            'link' => 'Link',
             'status' => 'Status',
+            'is_deleted' => 'Is Deleted',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+            'imageFile' => 'Upload Image',
         ];
     }
-
 }

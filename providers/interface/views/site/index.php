@@ -1,6 +1,6 @@
 <?php
 /** @var yii\web\View $this */
-$this->title = 'My Yii Application';
+$this->title = '| The best restaurant in Mombasa. ';
 ?> 
 
 <?= $this->render('@ui/views/components/qaffeehome/banner') ?>
