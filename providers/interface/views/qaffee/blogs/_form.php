@@ -325,7 +325,7 @@ $this->registerCss($css);
           <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
         </div>
          <div class="form-section">
-            <h2>Menu Image</h2>
+            <h2>Blog Image</h2>
             <div class="form-group">
                 <label for="image">Upload Image</label>
                 <div class="image-upload" id="imageUploadArea">

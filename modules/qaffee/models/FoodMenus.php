@@ -54,7 +54,7 @@ class FoodMenus extends \yii\db\ActiveRecord
             'description' => 'Description',
             'price' => 'Price',
             'image' => 'Image',
-            'category_id' => 'Category ID',
+            'category_id' => 'Category ',
             'is_available' => 'Is Available',
             'display_order' => 'Display Order',
             'created_at' => 'Created At',

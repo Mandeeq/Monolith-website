@@ -41,11 +41,11 @@ class Blogs extends \yii\db\ActiveRecord
             [['status'], 'default', 'value' => 'draft'],
             [['title', 'slug', 'content', 'created_at', 'updated_at'], 'required'],
             [['content'], 'string'],
-            [['author_id', 'created_at', 'updated_at'], 'default', 'value' => null],
+            [['author_id', 'created_at', 'updated_at','slug'], 'default', 'value' => null],
             [['author_id', 'created_at', 'updated_at'], 'integer'],
             [['published_at'], 'safe'],
             [['title', 'slug', 'image', 'status'], 'string', 'max' => 255],
-            [['slug'], 'unique'],
+            
         ];
     }
 

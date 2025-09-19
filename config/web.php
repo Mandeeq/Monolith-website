@@ -13,6 +13,11 @@ $config = [
     'modules' => $wrapper->load('modules'),
     'runtimePath' => dirname(__DIR__) . '/providers/bin',
     'components' => [
+             'formatter' => [
+            'class' => 'yii\i18n\Formatter',
+            'locale' => 'en-KE',
+            'currencyCode' => 'KES',
+        ],
         'assetManager' => [
             'basePath' => '@ui/assets/core',
             'baseUrl' => '@web/providers/interface/assets/core',

@@ -314,10 +314,7 @@ $this->registerCss($css);
 ?>
 
 <div class="container">
-    <header>
-        <h1><i class="fas fa-utensils"></i> Hotel Menu Management</h1>
-        <p>Add and update menu items for your hotel restaurant</p>
-    </header>
+
     
     <div class="form-container">
         <?php $form = ActiveForm::begin(

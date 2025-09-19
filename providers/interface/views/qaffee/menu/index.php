@@ -50,10 +50,28 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'description:ntext',
             'price',
+            [
+                'attribute' => 'image',
+                'format' => 'html',
+                'value' => function ($model) {
+                    /** @var FoodMenus $model */
+                    return $model->image ? Html::img(Yii::getAlias('@web') . $model->image, ['alt' => $model->name, 'style' => 'width: 50px; height: auto;']) : '(no image)';
+                },
+                'filter' => false, // Disable filtering for image column
+
+            ],
+            [
+                'attribute' => 'category_id',
+                'value' => function ($model) {
+                    return $model->category ? $model->category->name : '(not set)';
+                },
+                'filter' => \yii\helpers\ArrayHelper::map(\qaffee\models\MenuCategories::find()->asArray()->all(), 'id', 'name'),
+                'filterInputOptions' => ['prompt' => 'Select Category', 'class' => 'form-control'],
+              ],
             // 'image',
             //'category_id',
-            'is_available',
-            'display_order',
+            // 'is_available',
+            // 'display_order',
             //'is_deleted',
             //'created_at',
             //'updated_at',

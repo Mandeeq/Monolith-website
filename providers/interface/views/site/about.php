@@ -1,6 +1,6 @@
 <?php
 /** @var yii\web\View $this */
-$this->title = 'My Yii Application';
+$this->title = ' About Us - Learn More About Our Journey and Values';
 ?> 
 
 <?= $this->render('@ui/views/components/qaffeeabout/breadcrumb') ?>

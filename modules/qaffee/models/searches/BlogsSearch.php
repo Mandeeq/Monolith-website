@@ -19,7 +19,7 @@ class BlogsSearch extends Blogs
     {
         return [
             [['id', 'author_id', 'created_at', 'updated_at'], 'integer'],
-            [['title', 'slug', 'content', 'image', 'published_at', 'status'], 'safe'],
+            [['title', 'content', 'image', 'published_at', 'status'], 'safe'],
             ['globalSearch', 'safe']
         ];
     }
@@ -71,7 +71,7 @@ class BlogsSearch extends Blogs
         ]);
 
         $query->orFilterWhere(['ilike', 'title', $this->globalSearch])
-            ->orFilterWhere(['ilike', 'slug', $this->globalSearch])
+            // ->orFilterWhere(['ilike', 'slug', $this->globalSearch])
             ->orFilterWhere(['ilike', 'content', $this->globalSearch])
             ->orFilterWhere(['ilike', 'image', $this->globalSearch])
             ->orFilterWhere(['ilike', 'status', $this->globalSearch]);
@@ -85,7 +85,7 @@ class BlogsSearch extends Blogs
         ]);
 
         $query->andFilterWhere(['ilike', 'title', $this->title])
-            ->andFilterWhere(['ilike', 'slug', $this->slug])
+            // ->andFilterWhere(['ilike', 'slug', $this->slug])
             ->andFilterWhere(['ilike', 'content', $this->content])
             ->andFilterWhere(['ilike', 'image', $this->image])
             ->andFilterWhere(['ilike', 'status', $this->status]);

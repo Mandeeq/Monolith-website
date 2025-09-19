@@ -1,6 +1,6 @@
 <?php
 /** @var yii\web\View $this */
-$this->title = 'My Yii Application';
+$this->title = ' Contact Us - Get in Touch with Our Team';
 ?> 
 
 <?= $this->render('@ui/views/components/qaffeecontact/breadcrumbs') ?>
