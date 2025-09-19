@@ -4,6 +4,7 @@ use yii\helpers\Html;
 <section class="" style="position: relative; overflow: hidden;">
   
   <!-- Banner Image -->
+<<<<<<< HEAD
    <?= Html::img('@web/web/assets/img/banner_bg.png', [
                 'alt' => 'banner_bg ',
                 // 'class' => 'img-fluid',
@@ -12,6 +13,8 @@ use yii\helpers\Html;
              
              ', // adjust size here
             ]) ?>
+=======
+>>>>>>> 61d1703ca919348c5a08ecb032abc770f0c168df
   <img src="/e-comerce/e-commerce-app/web/assets/img/banner_bg.png" 
        alt="Banner Background" 
        style="width:100%; height:100%; object-fit: cover; position: absolute; top:0; left:0; z-index:-1;">

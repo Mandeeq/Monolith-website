@@ -99,6 +99,7 @@ $config = [
             'enableStrictParsing' => false,
             'showScriptName' => false,
             'rules' => [
+<<<<<<< HEAD
                 // $_ENV['APP_VERSION'] . '/about' => 'site/about',
                 'qaffee/' => 'qaffee/about-sections/index',
                 '/' => 'site/index',
@@ -106,6 +107,10 @@ $config = [
                 '/contact' => 'site/contact',
                 '/menu'=>'site/menu',
                 '/blog'=>'site/blog',
+=======
+                $_ENV['APP_VERSION'] . '/about' => 'site/about',
+                'qaffee/' => 'qaffee/about-sections/index',
+>>>>>>> 61d1703ca919348c5a08ecb032abc770f0c168df
                 [
                     'pattern' => $_ENV['APP_VERSION'] . '/docs/openapi-json-resource',
                     'route' => 'site/json-docs',
