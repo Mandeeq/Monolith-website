@@ -110,6 +110,9 @@ $config = [
 =======
                 $_ENV['APP_VERSION'] . '/about' => 'site/about',
                 'qaffee/' => 'qaffee/about-sections/index',
+<<<<<<< HEAD
+>>>>>>> 61d1703ca919348c5a08ecb032abc770f0c168df
+=======
 >>>>>>> 61d1703ca919348c5a08ecb032abc770f0c168df
                 [
                     'pattern' => $_ENV['APP_VERSION'] . '/docs/openapi-json-resource',
