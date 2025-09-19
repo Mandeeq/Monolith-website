@@ -11,9 +11,10 @@ use yii\helpers\Html;
                 'alt' => 'RentalMS ',
                 'class' => 'img-fluid',
                 'style' => '
-            max-height: 50%;
-             margin-right: 10px;
-            max-width: 50%;
+            max-height: 80px;
+             margin-right: 5px;
+             margin-top: 30px;
+            max-width: 80px;
             border-radius: 50%;
             padding-bottom: -50px;
              

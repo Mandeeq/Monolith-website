@@ -16,6 +16,7 @@ $config = [
         'assetManager' => [
             'basePath' => '@ui/assets/core',
             'baseUrl' => '@web/providers/interface/assets/core',
+            'appendTimestamp' => true,
             'bundles' => [
                 'yii\bootstrap\BootstrapPluginAsset' => [
                     'js' => []
@@ -99,6 +100,7 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 $_ENV['APP_VERSION'] . '/about' => 'site/about',
+                'qaffee/' => 'qaffee/about-sections/index',
                 [
                     'pattern' => $_ENV['APP_VERSION'] . '/docs/openapi-json-resource',
                     'route' => 'site/json-docs',

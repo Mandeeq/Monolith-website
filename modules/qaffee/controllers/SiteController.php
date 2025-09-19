@@ -2,6 +2,7 @@
 namespace qaffee\controllers;
 use yii;
 use yii\web\Response;
+use qaffee\models\AboutSections;
 
 class SiteController extends \helpers\WebController
 {
@@ -17,10 +18,17 @@ class SiteController extends \helpers\WebController
         return $this->render('index');
     }
 
-    public function actionAbout()
+     public function actionAbout()
     {
-        $this->view->title = 'About Us';
-        return $this->render('about');
+        // If you expect one "about" section
+        $about = AboutSections::find()->orderBy(['order' => SORT_ASC])->one();
+
+        // If you expect multiple sections
+        // $about = AboutSections::find()->orderBy(['order' => SORT_ASC])->all();
+
+        return $this->render('about', [
+            'about' => $about,
+        ]);
     }
 
     public function actionContact()

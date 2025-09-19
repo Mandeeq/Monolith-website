@@ -1,21 +1,21 @@
 nav#sidebar {
-    background-color: #41220e!important;
+    background-color: #D5AD86!important;
     color: rgb(0, 0, 0) !important;
 }
 
 nav#sidebar .nav-main-link {
-    color: #ffffff !important;
+    color: #41220e !important;
     
     border-radius: 6px;
     padding: 0.5rem 1rem;
 }
 
 nav#sidebar .nav-main-link:hover {
-    background-color: #2b7cab !important;
+    background-color: #ffffff !important;
 }
 .card-header{
 
-    background-color: #012437 !important;
+    background-color: #41220e !important;
     color: #ffffff !important;
     font-weight: 500;
     /* padding: 1rem; */
@@ -25,7 +25,8 @@ nav#sidebar .nav-main-link:hover {
     overflow: hidden;
 }
 nav#sidebar .content-header {
-    background-color: #41220e!important;
+    /* background-color: #41220e!important; */
+    background-color: #D5AD86!important;
     color: #000102 !important;
     
     font-weight: 500;

@@ -13,6 +13,10 @@ use yii\web\NotFoundHttpException;
  */
 class Contact_messagesController extends DashboardController
 {
+    public function getViewPath()
+    {
+        return Yii::getAlias('@app/providers/interface/views/qaffee/contact_messages');
+    }
     public $permissions = [
         'qaffee-contact-messages-list'=>'View ContactMessages List',
         'qaffee-contact-messages-create'=>'Add ContactMessages',
@@ -26,12 +30,12 @@ class Contact_messagesController extends DashboardController
         $searchModel = new ContactMessagesSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
-         return $this->renderFile(
-    Yii::getAlias('@app/providers/interface/views/qaffee/contact_messages/index.php'),
-    [
-        'searchModel' => $searchModel,
-        'dataProvider' => $dataProvider,
-    ]
+        return $this->render(
+            'index',
+            [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]
 );
     }
     public function actionCreate()
@@ -50,10 +54,14 @@ class Contact_messagesController extends DashboardController
         } else {
             $model->loadDefaultValues();
         }
-        return $this->renderFile(
-        Yii::getAlias('@app/providers/interface/views/qaffee/contact_messages/create.php'),
-        ['model' => $model]
-    );
+        if ($this->request->isAjax) {
+            return $this->renderAjax('create', ['model' => $model]);
+        } else {
+          
+
+        return $this->render('create', ['model' => $model]);
+        }
+
     }
     public function actionUpdate($id)
     {
@@ -70,10 +78,11 @@ class Contact_messagesController extends DashboardController
                 }
             }
         }
-        return $this->renderFile(
-        Yii::getAlias('@app/providers/interface/views/qaffee/contact_messages/update.php'),
-        ['model' => $model]
-    );
+        if ($this->request->isAjax) {
+            return $this->renderAjax('update', ['model' => $model]);
+        } else {
+            return $this->render('update', ['model' => $model]);
+        }
       
     }
     public function actionTrash($id)

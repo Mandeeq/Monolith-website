@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
               'theme' => 'primary',
               'visible' => Yii::$app->user->can('qaffee-about-sections-create', true)
             ],
-            'modal' => ['title' => 'New About Sections']
+            'modal' => ['title' => 'New About Sections', 'size' => 'lg']
           ]) ?>
           </div> 
         </div>
@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'contentOptions' => ['style'=>'text-align: center;'],
                  'buttons' => [
                     'update' => function ($url, $model, $key) {
-                        return Html::customButton(['type' => 'modal', 'url' => Url::toRoute(['update', 'id' => $model->id]), 'modal' => ['title' => 'Update  About Sections'], 'appearence' => ['icon' => 'edit', 'theme' => 'info']]);
+                        return Html::customButton(['type' => 'modal', 'url' => Url::toRoute(['update', 'id' => $model->id]), 'modal' => ['title' => 'Update  About Sections' , 'size'=>'lg'], 'appearence' => ['icon' => 'edit', 'theme' => 'info']]);
                     },
                     'trash' => function ($url, $model, $key) {
                         return $model->is_deleted !== 1 ?

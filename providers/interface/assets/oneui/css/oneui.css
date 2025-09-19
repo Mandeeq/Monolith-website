@@ -49,8 +49,8 @@
   --bs-secondary-text-emphasis: #1c222a;
   --bs-success-text-emphasis: #083e21;
   --bs-info-text-emphasis: #083a44;
-  --bs-warning-text-emphasis: #5e2305;
-  --bs-danger-text-emphasis: #560c1c;
+  --bs-warning-text-emphasis:#D5AD86;
+  --bs-danger-text-emphasis: #D5AD86;
   --bs-light-text-emphasis: #495057;
   --bs-dark-text-emphasis: #495057;
   --bs-primary-bg-subtle: #d3ddf7;
@@ -15397,7 +15397,7 @@ textarea.form-control-lg {
 }
 @media (min-width: 1200px) {
   .fs-1 {
-    font-size: 2.25rem !important;
+    font-size: 1.65rem !important;
   }
   .fs-2 {
     font-size: 1.875rem !important;
