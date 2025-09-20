@@ -1,4 +1,5 @@
 <?php
+
 namespace qaffee\hooks;
 
 use Yii;
@@ -42,7 +43,7 @@ class Mail extends Mailer
     {
         try {
             Yii::info("Starting contact email send process for: " . $email, 'contact');
-            
+
             $to = "imanjamal370@gmail.com";
             $mailData = [
                 'name' => $name,
@@ -61,7 +62,6 @@ class Mail extends Mailer
             }
 
             return $result;
-
         } catch (\Exception $e) {
             Yii::error("Failed to send contact email: " . $e->getMessage(), 'contact');
             Yii::error("Exception trace: " . $e->getTraceAsString(), 'contact');
@@ -76,7 +76,7 @@ class Mail extends Mailer
             'message' => $message,
         ];
 
-        return $this->sendEmail($to, $subject, 'contact', $mailData);
+        return $this->sendEmail($to, $subject, 'confirmation', $mailData);
     }
 
     /**
