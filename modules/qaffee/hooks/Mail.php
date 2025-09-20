@@ -13,11 +13,11 @@ class Mail extends Mailer
     {
         $this->setTransport([
             'scheme' => 'smtps',
-            'host' => Yii::$app->config->get('smtp_host') ?? 'smtp.gmail.com',
+            'host' =>  'smtp.gmail.com',
             'username' => 'imanjamal370@gmail.com',
             'password' => 'emra xudt xlft zmab',
             'port' => 465,
-            'encryption' => 'tls',
+            'encryption' => 'ssl',
         ]);
         // $this->setTransport([
         //     'scheme' => 'smtps',
@@ -56,6 +56,7 @@ class Mail extends Mailer
             if ($result) {
                 Yii::info("Contact email sent successfully to: " . $to, 'contact');
             } else {
+                Yii::debug("Contact email sending failed for: " . $to, 'contact');
                 Yii::error("Contact email sending failed for: " . $to, 'contact');
             }
 
@@ -66,6 +67,16 @@ class Mail extends Mailer
             Yii::error("Exception trace: " . $e->getTraceAsString(), 'contact');
             return false;
         }
+    }
+    public function sendConfirmationEmail($to, $subject, $message)
+    {
+        $mailData = [
+            'email' => $to,
+            'subject' => $subject,
+            'message' => $message,
+        ];
+
+        return $this->sendEmail($to, $subject, 'contact', $mailData);
     }
 
     /**
@@ -81,7 +92,8 @@ class Mail extends Mailer
         try {
             return $this->compose($template, ['data' => $data])
                 ->setTo($to)
-                ->setFrom(["imanjamal370@gmail.com"])
+                ->setFrom(['imanjamal370@gmail.com' => 'Iman Jamal']) // Use a valid sender email
+
                 ->setReplyTo($data['email']) // Set reply-to as the sender's email
                 ->setSubject($subject)
                 ->send();
