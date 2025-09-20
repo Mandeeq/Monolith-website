@@ -1,4 +1,10 @@
 <?php
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+/** @var yii\web\View $this */
+/** @var qaffee\models\ContactForm $model */
+
+$model = new \qaffee\models\ContactForm();  
 ?>
  <section class="contact-section section_padding">
       <div class="container">
@@ -15,39 +21,44 @@
         </div>
 
         <div class="row">
-          <div class="col-12">
+          <!-- <div class="col-12">
             <h2 class="contact-title">Get in Touch</h2>
-          </div>
-          <div class="col-lg-8">
-            <form class="form-contact contact_form" action="contact_process.php" method="post" id="contactForm">
-              <div class="row">
-                <div class="col-12">
-                  <div class="form-group">
-                    <textarea class="form-control w-100" name="message" id="message" cols="30" rows="9"
-                      placeholder="Enter Message"></textarea>
-                  </div>
+          </div> -->
+         <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <h2 class="contact-title">Get in Touch</h2>
+                <p class="contact-description">We'd love to hear from you! Fill out the form below, and we'll get back to you as soon as possible.</p>
+
+                <?php if (Yii::$app->session->hasFlash('success')): ?>
+                    <div class="alert alert-success">
+                        <?= Yii::$app->session->getFlash('success') ?>
+                    </div>
+                <?php elseif (Yii::$app->session->hasFlash('error')): ?>
+                    <div class="alert alert-danger">
+                        <?= Yii::$app->session->getFlash('error') ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php $form = ActiveForm::begin([
+                    'id' => 'contact-form',
+                    'options' => ['class' => 'contact-form'],
+                ]); ?>
+
+                <?= $form->field($model, 'name')->textInput(['placeholder' => 'Enter your name']) ?>
+                <?= $form->field($model, 'email')->textInput(['placeholder' => 'Enter your email']) ?>
+                <?= $form->field($model, 'subject')->textInput(['placeholder' => 'Enter subject']) ?>
+                <?= $form->field($model, 'message')->textarea(['rows' => 6, 'placeholder' => 'Enter your message']) ?>
+
+                <div class="form-group text-center">
+                    <?= Html::submitButton('Send Message', ['class' => 'btn btn-primary btn_4']) ?>
                 </div>
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <input class="form-control" name="name" id="name" type="text" placeholder="Enter your name" />
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <input class="form-control" name="email" id="email" type="email" placeholder="Enter email address" />
-                  </div>
-                </div>
-                <div class="col-12">
-                  <div class="form-group">
-                    <input class="form-control" name="subject" id="subject" type="text" placeholder="Enter Subject" />
-                  </div>
-                </div>
-              </div>
-              <div class="form-group mt-3">
-                <button type="submit" class="button button-contactForm btn_4">Send Message</button>
-              </div>
-            </form>
-          </div>
+
+                <?php ActiveForm::end(); ?>
+            </div>
+        </div>
+    </div>
+         
           <div class="col-lg-4">
             <div class="media contact-info">
               <span class="contact-info__icon"><i class="ti-home"></i></span>
@@ -74,3 +85,47 @@
         </div>
       </div>
     </section>
+    <style>
+.contact_area {
+    padding: 50px 0;
+}
+.contact-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.contact-description {
+    font-size: 16px;
+    color: #666;
+    text-align: center;
+    margin-bottom: 30px;
+}
+.contact-form .form-group {
+    margin-bottom: 20px;
+}
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+.contact-form textarea {
+    resize: vertical;
+}
+.btn_4 {
+    padding: 12px 30px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+@media (max-width: 767px) {
+    .contact-title {
+        font-size: 24px;
+    }
+    .contact-description {
+        font-size: 14px;
+    }
+}
+</style>

@@ -3,6 +3,8 @@ namespace qaffee\controllers;
 use yii;
 use yii\web\Response;
 use qaffee\models\AboutSections;
+use qaffee\models\ContactForm;
+use qaffee\hooks\Mail;
 
 class SiteController extends \helpers\WebController
 {
@@ -31,9 +33,31 @@ class SiteController extends \helpers\WebController
         ]);
     }
 
-    public function actionContact()
+   public function actionContact()
     {
-        $this->view->title = 'Contact Us';
-        return $this->render('contact');
+        $model = new ContactForm();
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $mailer = new Mail();
+            $mailer = Yii::createObject([
+                                'class' => 'payment\hooks\Mail',
+                                'viewPath' => '@payment/templates/'
+                            ]);
+            if ($mailer->sendContactEmail(
+                $model->name,
+                $model->email,
+                $model->subject,
+                $model->message
+            )) {
+                Yii::$app->session->setFlash('success', 'Thank you for contacting us! We will get back to you soon.');
+            } else {
+                Yii::$app->session->setFlash('error', 'There was an error sending your message. Please try again.');
+            }
+            return $this->refresh();
+        }
+
+        return $this->render('contact', [
+            'model' => $model,
+        ]);
     }
 }
