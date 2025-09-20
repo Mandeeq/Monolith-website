@@ -6,7 +6,7 @@ use yii\helpers\Html;
         background-image: url('<?= Yii::getAlias('@web') ?>/web/assets/img/banner_bg.png');
         background-size: cover;
         background-position: center;
-        height: 1080px;
+        height: 1000px;
         position: relative;
     ">
         <div class="container h-100">
@@ -14,7 +14,7 @@ use yii\helpers\Html;
                 <div class="col-lg-7">
                     <div class="banner_text">
                         <div class="banner_text_iner">
-                            <h5 style="color: white;">Expensive but the best</h5>
+                            <h5 style="color: white;margin-top:-200px;">Expensive but the best</h5>
                             <h1 style="color: white;">Modern restaurant in center of the city</h1>
                             <a href="#" class="btn_1">book a table</a>
                         </div>
