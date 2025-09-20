@@ -68,15 +68,32 @@ class Mail extends Mailer
             return false;
         }
     }
-    public function sendConfirmationEmail($to, $subject, $message)
+    public function sendConfirmationEmail($name, $email, $subject, $message)
     {
-        $mailData = [
-            'email' => $to,
-            'subject' => $subject,
-            'message' => $message,
-        ];
+        try {
+            Yii::info("Starting confirmation email send process for: " . $email, 'contact');
 
-        return $this->sendEmail($to, $subject, 'confirmation', $mailData);
+            $mailData = [
+                'name' => $name,
+                'email' => $email,
+                'subject' => $subject,
+                'message' => $message,
+            ];
+
+            $result = $this->sendEmail($email, 'Thank You for Contacting Qaffee', 'confirmation', $mailData);
+
+            if ($result) {
+                Yii::info("Confirmation email sent successfully to: " . $email, 'contact');
+            } else {
+                Yii::error("Confirmation email sending failed for: " . $email, 'contact');
+            }
+
+            return $result;
+        } catch (\Exception $e) {
+            Yii::error("Failed to send confirmation email: " . $e->getMessage(), 'contact');
+            Yii::error("Exception trace: " . $e->getTraceAsString(), 'contact');
+            return false;
+        }
     }
 
     /**

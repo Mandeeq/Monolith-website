@@ -1,17 +1,16 @@
 <?php
-/**
- * @var array $data
- * $data contains:
- *   - email   (recipient)
- *   - subject (email subject)
- *   - message (custom message passed in)
- */
+/** @var array $data */
+$name = $data['name'];
+$email = $data['email'];
+$subject = $data['subject'];
+$message = $data['message'];
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title><?= htmlspecialchars($data['subject']) ?></title>
+    <title>Thank You for Contacting Qaffee</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -42,14 +41,16 @@
 </head>
 <body>
     <div class="email-container">
-        <h2>Confirmation</h2>
-        <p>Hello,</p>
-        <p><?= nl2br(htmlspecialchars($data['message'])) ?></p>
-
-        <p>If you did not request this email, please ignore it.</p>
-
+        <h2>Thank You, <?= htmlspecialchars($name) ?>!</h2>
+        <p>We have received your message and will get back to you soon.</p>
+        <p><strong>Your Submission Details:</strong></p>
+        <p><strong>Email:</strong> <?= htmlspecialchars($email) ?></p>
+        <p><strong>Subject:</strong> <?= htmlspecialchars($subject) ?></p>
+        <p><strong>Message:</strong></p>
+        <p><?= nl2br(htmlspecialchars($message)) ?></p>
+        <p>If you have any further questions, feel free to reply to this email or contact us at support@qaffee.com.</p>
         <div class="footer">
-            &copy; <?= date('Y') ?> Qaffee App. All rights reserved.
+            &copy; <?= date('Y') ?> Qaffee Restaurant. All rights reserved.
         </div>
     </div>
 </body>

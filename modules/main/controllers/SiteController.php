@@ -86,33 +86,38 @@ class SiteController extends \helpers\WebController
         return true;
     }
 
-     public function actionContact()
+    public function actionContact()
     {
         $model = new ContactForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $mailer = new Mail();
+          
             $mailer = Yii::createObject([
-                                'class' => 'qaffee\hooks\Mail',
-                                'viewPath' => '@qaffee/templates/'
-                            ]);
-            if ($mailer->sendContactEmail(
+                'class' => 'qaffee\hooks\Mail',
+                'viewPath' => '@qaffee/templates/',
+            ]);
+            $adminEmailSent = $mailer->sendContactEmail(
                 $model->name,
                 $model->email,
                 $model->subject,
                 $model->message
-            ))
+            );
 
-             {
+            if ($adminEmailSent) {
                 Yii::$app->session->setFlash('success', 'Thank you for contacting us! We will get back to you soon.');
+                // Send confirmation email to the user
+                $confirmationSent = $mailer->sendConfirmationEmail(
+                    $model->name,
+                    $model->email,
+                    $model->subject,
+                    $model->message
+                );
+                if (!$confirmationSent) {
+                   
+                }
             } else {
                 Yii::$app->session->setFlash('error', 'There was an error sending your message. Please try again.');
             }
-            $mailer->sendConfirmationEmail(
-                $model->message,
-                $model->email,
-                $model->subject,
-            );
             return $this->refresh();
         }
 
