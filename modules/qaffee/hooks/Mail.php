@@ -13,11 +13,11 @@ class Mail extends Mailer
     {
         $this->setTransport([
             'scheme' => 'smtps',
-            'host' => Yii::$app->config->get('smtp_host') ?? 'smtp.gmail.com',
+            'host' =>  'smtp.gmail.com',
             'username' => 'imanjamal370@gmail.com',
             'password' => 'emra xudt xlft zmab',
             'port' => 465,
-            'encryption' => 'tls',
+            'encryption' => 'tsl',
         ]);
         // $this->setTransport([
         //     'scheme' => 'smtps',

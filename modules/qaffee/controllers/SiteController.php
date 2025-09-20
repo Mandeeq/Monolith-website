@@ -33,16 +33,15 @@ class SiteController extends \helpers\WebController
         ]);
     }
 
-   public function actionContact()
+  public function actionContact()
     {
         $model = new ContactForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            // $mailer = new Mail();
             $mailer = Yii::createObject([
-                                'class' => 'qaffee\hooks\Mail',
-                                'viewPath' => '@qaffee/templates/'
-                            ]);
+                'class' => 'qaffee\hooks\Mail',
+                'viewPath' => '@qaffee/templates/',
+            ]);
             if ($mailer->sendContactEmail(
                 $model->name,
                 $model->email,
@@ -60,4 +59,13 @@ class SiteController extends \helpers\WebController
             'model' => $model,
         ]);
     }
+    public function actionTestMail()
+{
+    $mailer = Yii::createObject([
+        'class' => 'qaffee\hooks\Mail',
+        'viewPath' => '@qaffee/templates/',
+    ]);
+    $result = $mailer->sendContactEmail('Test User', 'test@example.com', 'Test Subject', 'This is a test message');
+    return $result ? 'Email sent' : 'Email failed';
+}
 }
