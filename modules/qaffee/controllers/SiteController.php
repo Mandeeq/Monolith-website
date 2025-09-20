@@ -38,10 +38,10 @@ class SiteController extends \helpers\WebController
         $model = new ContactForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $mailer = new Mail();
+            // $mailer = new Mail();
             $mailer = Yii::createObject([
-                                'class' => 'payment\hooks\Mail',
-                                'viewPath' => '@payment/templates/'
+                                'class' => 'qaffee\hooks\Mail',
+                                'viewPath' => '@qaffee/templates/'
                             ]);
             if ($mailer->sendContactEmail(
                 $model->name,

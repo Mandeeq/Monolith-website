@@ -14,11 +14,19 @@ class Mail extends Mailer
         $this->setTransport([
             'scheme' => 'smtps',
             'host' => Yii::$app->config->get('smtp_host') ?? 'smtp.gmail.com',
-            'username' => Yii::$app->config->get('smtp_user'),
-            'password' => Yii::$app->config->get('smtp_password'),
-            'port' => (int) Yii::$app->config->get('smtp_port'),
-            'encryption' => Yii::$app->config->get('email_encryption'),
+            'username' => 'imanjamal370@gmail.com',
+            'password' => 'emra xudt xlft zmab',
+            'port' => 465,
+            'encryption' => 'tls',
         ]);
+        // $this->setTransport([
+        //     'scheme' => 'smtps',
+        //     'host' => Yii::$app->config->get('smtp_host') ?? 'smtp.gmail.com',
+        //     'username' => Yii::$app->config->get('smtp_user'),
+        //     'password' => Yii::$app->config->get('smtp_password'),
+        //     'port' => (int) Yii::$app->config->get('smtp_port'),
+        //     'encryption' => Yii::$app->config->get('email_encryption'),
+        // ]);
         parent::init();
     }
 
@@ -35,7 +43,7 @@ class Mail extends Mailer
         try {
             Yii::info("Starting contact email send process for: " . $email, 'contact');
             
-            $to = Yii::$app->config->get('admin_email') ?? 'admin@qaffee.com';
+            $to = "imanjamal370@gmail.com";
             $mailData = [
                 'name' => $name,
                 'email' => $email,
@@ -73,7 +81,7 @@ class Mail extends Mailer
         try {
             return $this->compose($template, ['data' => $data])
                 ->setTo($to)
-                ->setFrom([Yii::$app->config->get('sender_email') => Yii::$app->name])
+                ->setFrom(["imanjamal370@gmail.com"])
                 ->setReplyTo($data['email']) // Set reply-to as the sender's email
                 ->setSubject($subject)
                 ->send();

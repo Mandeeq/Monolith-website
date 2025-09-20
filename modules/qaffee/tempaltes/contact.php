@@ -1,4 +1,5 @@
 <?php
+use yii\helpers\Html;
 /** @var array $data */
 $name = $data['name'];
 $email = $data['email'];
