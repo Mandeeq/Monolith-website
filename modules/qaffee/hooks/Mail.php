@@ -1,4 +1,5 @@
 <?php
+
 namespace qaffee\hooks;
 
 use Yii;
@@ -17,7 +18,7 @@ class Mail extends Mailer
             'username' => 'imanjamal370@gmail.com',
             'password' => 'emra xudt xlft zmab',
             'port' => 465,
-            'encryption' => 'tsl',
+            'encryption' => 'ssl',
         ]);
         // $this->setTransport([
         //     'scheme' => 'smtps',
@@ -42,7 +43,7 @@ class Mail extends Mailer
     {
         try {
             Yii::info("Starting contact email send process for: " . $email, 'contact');
-            
+
             $to = "imanjamal370@gmail.com";
             $mailData = [
                 'name' => $name,
@@ -56,16 +57,26 @@ class Mail extends Mailer
             if ($result) {
                 Yii::info("Contact email sent successfully to: " . $to, 'contact');
             } else {
+                Yii::debug("Contact email sending failed for: " . $to, 'contact');
                 Yii::error("Contact email sending failed for: " . $to, 'contact');
             }
 
             return $result;
-
         } catch (\Exception $e) {
             Yii::error("Failed to send contact email: " . $e->getMessage(), 'contact');
             Yii::error("Exception trace: " . $e->getTraceAsString(), 'contact');
             return false;
         }
+    }
+    public function sendConfirmationEmail($to, $subject, $message)
+    {
+        $mailData = [
+            'email' => $to,
+            'subject' => $subject,
+            'message' => $message,
+        ];
+
+        return $this->sendEmail($to, $subject, 'confirmation', $mailData);
     }
 
     /**
@@ -81,7 +92,8 @@ class Mail extends Mailer
         try {
             return $this->compose($template, ['data' => $data])
                 ->setTo($to)
-                ->setFrom(["imanjamal370@gmail.com"])
+                ->setFrom(['imanjamal370@gmail.com' => 'Iman Jamal']) // Use a valid sender email
+
                 ->setReplyTo($data['email']) // Set reply-to as the sender's email
                 ->setSubject($subject)
                 ->send();

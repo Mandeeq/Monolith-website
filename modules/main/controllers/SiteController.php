@@ -5,6 +5,8 @@ namespace main\controllers;
 use Yii;
 use yii\web\Response;
 use qaffee\models\ContactForm;
+use qaffee\hooks\Mail;
+
 class SiteController extends \helpers\WebController
 {
     /**
@@ -53,41 +55,7 @@ class SiteController extends \helpers\WebController
         //Yii::$app->session->setFlash('success', 'Link created successfully');
         return $this->render('blog');
     }
-    public function actionContact()
-    {
-        $model = new ContactForm();
-
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $mailer = Yii::createObject([
-                'class' => 'qaffee\hooks\Mail',
-                'viewPath' => '@qaffee/templates/',
-            ]);
-            if ($mailer->sendContactEmail(
-                $model->name,
-                $model->email,
-                $model->subject,
-                $model->message
-            )) {
-                Yii::$app->session->setFlash('success', 'Thank you for contacting us! We will get back to you soon.');
-            } else {
-                Yii::$app->session->setFlash('error', 'There was an error sending your message. Please try again.');
-            }
-            return $this->refresh();
-        }
-
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
-    }
-    public function actionTestMail()
-{
-    $mailer = Yii::createObject([
-        'class' => 'qaffee\hooks\Mail',
-        'viewPath' => '@qaffee/templates/',
-    ]);
-    $result = $mailer->sendContactEmail('Test User', 'test@example.com', 'Test Subject', 'This is a test message');
-    return $result ? 'Email sent' : 'Email failed';
-}
+ 
     public function actionDocs($mod = 'dashboard')
     {
         //$this->viewPath = '@swagger';
@@ -116,5 +84,40 @@ class SiteController extends \helpers\WebController
         }
         Yii::$app->response->sendFile($file, false, ['mimeType' => 'json', 'inline' => true]);
         return true;
+    }
+
+     public function actionContact()
+    {
+        $model = new ContactForm();
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $mailer = new Mail();
+            $mailer = Yii::createObject([
+                                'class' => 'qaffee\hooks\Mail',
+                                'viewPath' => '@qaffee/templates/'
+                            ]);
+            if ($mailer->sendContactEmail(
+                $model->name,
+                $model->email,
+                $model->subject,
+                $model->message
+            ))
+
+             {
+                Yii::$app->session->setFlash('success', 'Thank you for contacting us! We will get back to you soon.');
+            } else {
+                Yii::$app->session->setFlash('error', 'There was an error sending your message. Please try again.');
+            }
+            $mailer->sendConfirmationEmail(
+                $model->message,
+                $model->email,
+                $model->subject,
+            );
+            return $this->refresh();
+        }
+
+        return $this->render('contact', [
+            'model' => $model,
+        ]);
     }
 }
